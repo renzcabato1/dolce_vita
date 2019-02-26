@@ -118,7 +118,7 @@
         }
         else
         {
-            $latest_interest = $soa_payment->previos_bill*.02;
+            $latest_interest = ($soa_payment->previos_bill - $last_payment)*.02;
         }
         $sub_total = $total_overdue_charges + $latest_interest - $soa_payment->adjustment;
         $total_amout_due = $sub_total + $total_current_charges;

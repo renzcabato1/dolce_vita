@@ -65,7 +65,7 @@ class PaymentController extends Controller
             $soa_payments = Soapayment::where('done','0')
             ->leftJoin('clients','soapayments.client_id','=','clients.id')
             ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
-            ->orderBy('client_status','desc')
+            ->orderBy('client_lot_number','asc')
             ->get();
             $payments = [];
             foreach($soa_payments as $soa_payment){
@@ -95,7 +95,7 @@ class PaymentController extends Controller
             ->leftJoin('clients','soapayments.client_id','=','clients.id')
             ->where('clients.status','resident')
             ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
-            ->orderBy('client_status','desc')
+            ->orderBy('client_lot_number','asc')
             ->get();
             $payments = [];
             foreach($soa_payments as $soa_payment){
@@ -126,7 +126,7 @@ class PaymentController extends Controller
             ->leftJoin('clients','soapayments.client_id','=','clients.id')
             ->where('clients.status','non-resident')
             ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
-            ->orderBy('client_status','desc')
+            ->orderBy('client_lot_number','asc')
             ->get();
             $payments = [];
             foreach($soa_payments as $soa_payment){
@@ -217,14 +217,12 @@ class PaymentController extends Controller
             }
             else 
             {
-                $interest_total = $previous_interest + $latest_interest;
-                $a = $total_amout_due - $interest_total ;
-                
+                $interest_total = $previous_interest + $latest_interest - $soa_payment->adjustment ;
+                $a = $total_amout_due - $interest_total;
                 if($a >= 0)
                 {
                     $previous_bill_total = $a;
                     $previos_interest_total = $interest_total;
-                    
                 }
                 else
                 {
@@ -374,8 +372,7 @@ class PaymentController extends Controller
         $resident_count = Client::where('status','resident')->count();
         $non_resident_count = Client::where('status','non-resident')->count();
         $unknown = Client::where('status','!=','non-resident')->where('status','!=','resident')->count();
-        
-        
+    
         foreach($soa_payments as $soa_payment){
             $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
             if($soa_old == null)
@@ -421,8 +418,7 @@ class PaymentController extends Controller
             $pdf = PDF::loadView('payment_report_pdf',array(
                 'date_from' => $date_from,
                 'date_to' => $date_to,
-                'results' => $results,    
-                
+                'results' => $results,
             ));
             return $pdf->stream('payment_report.pdf');
             

@@ -168,7 +168,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/obr-report') }}" onclick='show()'>
-              <i class="ni ni-chart-bar-32 text-orange"></i>OBR Report
+              <i class="ni ni-chart-bar-32 text-orange"></i>SOA History
             </a>
           </li>
         </ul>

@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <!-- Brand -->
             <span>
-                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" >OB Report </a>
+                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" >SOA History </a>
             </span>
             <!-- User -->
             <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -112,7 +112,7 @@
                                     }
                                     else
                                     {
-                                        $latest_interest = $soa_payment->previos_bill*.02;
+                                        $latest_interest = ($soa_payment->previos_bill - $last_payment) *.02;
                                     }
                                     $sub_total = $total_overdue_charges + $latest_interest - $soa_payment->adjustment;
                                     $total_amout_due = $sub_total + $total_current_charges;
