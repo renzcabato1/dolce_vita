@@ -6,10 +6,11 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div class="container-fluid">
             <!-- Brand -->
+            
             <span>
                 <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" >SOA ({{$name_of_month}})</a>
                 <button data-toggle="modal" data-target="#generate_soa" data-toggle="generate_soa"  type="button" style='margin:5px;' class="btn btn-success"><i ></i>GENERATE SOA</button>
-                <a href='{{ url('/print-soa-pdf') }}' target='_' style='margin:5px;' class="btn btn-info"><i ></i>PRINT ALL SOA</a>
+                
             </span>
             <!-- User -->
             <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -65,67 +66,84 @@
                         </div>
                         @endif
                         @include('error')
-                        <table id="example" class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Billing Number</th>
-                                    <th scope="col" style='width:100px'>Name</th>
-                                    <th scope="col">Lot Number</th>
-                                    <th scope="col">HOA ID</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($soa_payments as $soa_payment)
-                                <tr>
-                                    @php
-                                    if(($soa_payment->billing_number/10) < 1 )
-                                    {
-                                        $soa_number = 'SOA-'.date('Y-m',(strtotime($soa_payment->date_soa))).'-00'.$soa_payment->billing_number;
-                                    }
-                                    else if(($soa_payment->billing_number/10) < 10 )
-                                    {
-                                        $soa_number = 'SOA-'.date('Y-m',(strtotime($soa_payment->date_soa))).'-0'.$soa_payment->billing_number;
-                                    }
-                                    else 
-                                    {
-                                        $soa_number = 'SOA-'.date('Y-m',(strtotime($soa_payment->date_soa))).'-'.$soa_payment->billing_number;
-                                    }
-                                    @endphp
-                                    <td scope="col" style='width:100px'>{{$soa_number}}</td>
-                                    <td scope="col" style='width:100px'> <span title='{{$soa_payment->client_name}}'>{{str_limit($soa_payment->client_name, 25)}}</span></td>
-                                    <td scope="col">{{$soa_payment->client_lot_number}}</td>
-                                    <td scope="col">{{$soa_payment->client_hoa_id}}</td>
-                                    <td class="text-left">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                @if($soa_payment->payment == null)
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#add_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Add Payment</a>
-                                                 
-                                                 @else
-                                                 <a class="dropdown-item" data-toggle="modal" data-target="#edit_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Edit Payment</a>
-                                                
-                                                 @endif
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#edit_soa{{$soa_payment->id}}" data-toggle="edit"  href="#">Edit</a>
-                                                <a class="dropdown-item" target='_'  href="{{ url('/soa-pdf/'.$soa_payment->id.'') }}">Print</a>
-                                            </div>
-                                        </div>
-                                        @include('edit_payment')
-                                        @include('edit_soa')
-                                        @include('add_payment')
+                        <table>
+                            <tr>
+                                <form action='print-soa-pdf' method='get' target='_'>
+                                    <td>
+                                        <select name='type' class='form-control' style='widht:100px;' required>
+                                            <option value='1'>All</option>
+                                            <option value='2'>Resident</option>
+                                            <option value='3'>Non-Resident</option>
+                                        </select>
                                     </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    <td>
+                                        <button type='submit'  style='margin:5px;' class="btn btn-info"><i ></i>PRINT</button>
+                                    </td>
+                                </form>
+                            </tr>
+                            <table>
+                                <table id="example" class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Billing Number</th>
+                                            <th scope="col" style='width:100px'>Name</th>
+                                            <th scope="col">Lot Number</th>
+                                            <th scope="col">HOA ID</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($soa_payments as $soa_payment)
+                                        <tr>
+                                            @php
+                                            if(($soa_payment->billing_number/10) < 1 )
+                                            {
+                                                $soa_number = 'SOA-'.date('Y-m',(strtotime($soa_payment->date_soa))).'-00'.$soa_payment->billing_number;
+                                            }
+                                            else if(($soa_payment->billing_number/10) < 10 )
+                                            {
+                                                $soa_number = 'SOA-'.date('Y-m',(strtotime($soa_payment->date_soa))).'-0'.$soa_payment->billing_number;
+                                            }
+                                            else 
+                                            {
+                                                $soa_number = 'SOA-'.date('Y-m',(strtotime($soa_payment->date_soa))).'-'.$soa_payment->billing_number;
+                                            }
+                                            @endphp
+                                            <td scope="col" style='width:100px'>{{$soa_number}}</td>
+                                            <td scope="col" style='width:100px'> <span title='{{$soa_payment->client_name}}'>{{str_limit($soa_payment->client_name, 25)}}</span></td>
+                                            <td scope="col">{{$soa_payment->client_lot_number}}</td>
+                                            <td scope="col">{{$soa_payment->client_hoa_id}}</td>
+                                            <td class="text-left">
+                                                <div class="dropdown">
+                                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                        @if($soa_payment->payment == null)
+                                                        <a class="dropdown-item" data-toggle="modal" data-target="#add_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Add Payment</a>
+                                                        
+                                                        @else
+                                                        <a class="dropdown-item" data-toggle="modal" data-target="#edit_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Edit Payment</a>
+                                                        
+                                                        @endif
+                                                        <a class="dropdown-item" data-toggle="modal" data-target="#edit_soa{{$soa_payment->id}}" data-toggle="edit"  href="#">Edit</a>
+                                                        <a class="dropdown-item" target='_'  href="{{ url('/soa-pdf/'.$soa_payment->id.'') }}">Print</a>
+                                                    </div>
+                                                </div>
+                                                @include('edit_payment')
+                                                @include('edit_soa')
+                                                @include('add_payment')
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@include('generate_soa')
-@endsection
+        @include('generate_soa')
+        @endsection
+        

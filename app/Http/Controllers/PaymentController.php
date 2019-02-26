@@ -58,30 +58,95 @@ class PaymentController extends Controller
             'soa_last_month' => date("Y-m",(strtotime(date("Y-m", strtotime($soa_last_month->date_soa)) . " +1 month"))), 
         ));
     }
-    public function print_all_soa()
+    public function print_all_soa(Request $request)
     {
-        $soa_payments = Soapayment::where('done','0')
-        ->leftJoin('clients','soapayments.client_id','=','clients.id')
-        ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
-        ->get();
-        $payments = [];
-        foreach($soa_payments as $soa_payment){
-            $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
-            if($soa_old == null)
-            {
-                $payments[] = 0;
-            }
-            else
-            {
-                $payment = Payment::where('soa_number',$soa_old->id)->first();
-                if($payment == null)
+        if($request->type == 1)
+        {
+            $soa_payments = Soapayment::where('done','0')
+            ->leftJoin('clients','soapayments.client_id','=','clients.id')
+            ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
+            ->orderBy('client_status','desc')
+            ->get();
+            $payments = [];
+            foreach($soa_payments as $soa_payment){
+                $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
+                if($soa_old == null)
                 {
-                    
                     $payments[] = 0;
                 }
                 else
                 {
-                    $payments[] = $payment->amount;
+                    $payment = Payment::where('soa_number',$soa_old->id)->first();
+                    if($payment == null)
+                    {
+                        
+                        $payments[] = 0;
+                    }
+                    else
+                    {
+                        $payments[] = $payment->amount;
+                    }
+                }
+            }
+        }
+        else if($request->type == 2)
+        {
+            $soa_payments = Soapayment::where('done','0')
+            ->leftJoin('clients','soapayments.client_id','=','clients.id')
+            ->where('clients.status','resident')
+            ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
+            ->orderBy('client_status','desc')
+            ->get();
+            $payments = [];
+            foreach($soa_payments as $soa_payment){
+                $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
+                if($soa_old == null)
+                {
+                    $payments[] = 0;
+                }
+                else
+                {
+                    $payment = Payment::where('soa_number',$soa_old->id)->first();
+                    if($payment == null)
+                    {
+                        
+                        $payments[] = 0;
+                    }
+                    else
+                    {
+                        $payments[] = $payment->amount;
+                    }
+                }
+            }
+            
+        }
+        else if($request->type == 3)
+        {
+            $soa_payments = Soapayment::where('done','0')
+            ->leftJoin('clients','soapayments.client_id','=','clients.id')
+            ->where('clients.status','non-resident')
+            ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
+            ->orderBy('client_status','desc')
+            ->get();
+            $payments = [];
+            foreach($soa_payments as $soa_payment){
+                $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
+                if($soa_old == null)
+                {
+                    $payments[] = 0;
+                }
+                else
+                {
+                    $payment = Payment::where('soa_number',$soa_old->id)->first();
+                    if($payment == null)
+                    {
+                        
+                        $payments[] = 0;
+                    }
+                    else
+                    {
+                        $payments[] = $payment->amount;
+                    }
                 }
             }
         }
@@ -138,7 +203,7 @@ class PaymentController extends Controller
             }
             else
             {
-                $latest_interest = $soa_payment->previos_bill * .02;
+                $latest_interest = ($soa_payment->previos_bill - $last_payment) * .02;
             }
             $total_current_charges = ($soa_payment->special_assessment+$soa_payment->others+($soa_payment->rate * $soa_payment->lot_size));
             $soa_adjustment = $soa_payment->adjustment;
@@ -154,19 +219,19 @@ class PaymentController extends Controller
             {
                 $interest_total = $previous_interest + $latest_interest;
                 $a = $total_amout_due - $interest_total ;
-
+                
                 if($a >= 0)
                 {
                     $previous_bill_total = $a;
                     $previos_interest_total = $interest_total;
-                   
+                    
                 }
                 else
                 {
                     $previous_bill_total = 0;
                     $previos_interest_total = $a * -1;
                 }
-
+                
             }
             $soa_done = Soapayment::where('done',0)->where('client_id',$soa_payment->client_id)->first();
             $soa_done->done = 1;
@@ -265,9 +330,10 @@ class PaymentController extends Controller
         $soa_payments = Soapayment::where('date_soa',$date_select)
         ->leftJoin('clients','soapayments.client_id','=','clients.id')
         ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
+        ->orderBy('client_lot_number')
         ->get();
         $payments = [];
-
+        
         foreach($soa_payments as $soa_payment){
             $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
             if($soa_old == null)
@@ -302,8 +368,14 @@ class PaymentController extends Controller
         $soa_payments = Soapayment::where('date_soa',$date_select)
         ->leftJoin('clients','soapayments.client_id','=','clients.id')
         ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
+        ->orderBy('client_lot_number')
         ->get();
         $payments = [];
+        $resident_count = Client::where('status','resident')->count();
+        $non_resident_count = Client::where('status','non-resident')->count();
+        $unknown = Client::where('status','!=','non-resident')->where('status','!=','resident')->count();
+        
+        
         foreach($soa_payments as $soa_payment){
             $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
             if($soa_old == null)
@@ -328,28 +400,32 @@ class PaymentController extends Controller
             'soa_payments' => $soa_payments,
             'payments' => $payments,
             'date_select' => $date_select,
-        ))->setOrientation('landscape');
-        
-        return $pdf->stream('soa_all_obr.pdf');
-
+            'resident_count' => $resident_count,
+            'non_resident_count' => $non_resident_count,
+            'unknown' => $unknown,
+            ))->setOrientation('landscape');
+            
+            return $pdf->stream('soa_all_obr.pdf');
+            
+        }
+        public function payment_report_pdf(Request $request)
+        {
+            $date_from = $request->date_from;
+            $date_to = $request->date_to;
+            $results = Payment::whereBetween('date_paid',[$date_from, $date_to])
+            ->leftJoin('soapayments','payments.soa_number','=','soapayments.id')
+            ->leftJoin('clients','soapayments.client_id','=','clients.id')
+            ->select('payments.*','clients.name as client_name','clients.lot_number')
+            ->orderBy('date_paid','asc')
+            ->get();
+            $pdf = PDF::loadView('payment_report_pdf',array(
+                'date_from' => $date_from,
+                'date_to' => $date_to,
+                'results' => $results,    
+                
+            ));
+            return $pdf->stream('payment_report.pdf');
+            
+        }
     }
-    public function payment_report_pdf(Request $request)
-    {
-        $date_from = $request->date_from;
-        $date_to = $request->date_to;
-        $results = Payment::whereBetween('date_paid',[$date_from, $date_to])
-        ->leftJoin('soapayments','payments.soa_number','=','soapayments.id')
-        ->leftJoin('clients','soapayments.client_id','=','clients.id')
-        ->select('payments.*','clients.name as client_name','clients.lot_number')
-        ->orderBy('date_paid','asc')
-        ->get();
-        $pdf = PDF::loadView('payment_report_pdf',array(
-            'date_from' => $date_from,
-            'date_to' => $date_to,
-            'results' => $results,    
-
-        ));
-        return $pdf->stream('payment_report.pdf');
-
-    }
-}
+    

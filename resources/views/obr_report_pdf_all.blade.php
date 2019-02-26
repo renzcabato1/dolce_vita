@@ -21,6 +21,18 @@
         .page-break {
             page-break-after: always;
         }
+        .green {
+            width:10px;
+            border: 10px solid green;
+        }
+        .violet {
+            width:10px;
+            border: 10px solid blueviolet;
+        }
+        .grey {
+            width:10px;
+            border: 10px solid gray;
+        }
     </style>
 </head>
 <body>
@@ -37,7 +49,25 @@
         </tr>
     </table>
     <br>
-    OBR MONTH : {{date('F Y', strtotime($date_select))}}
+    <table width='100%'>
+        <tr>
+            <td width='70%'>
+                OBR MONTH : {{date('F Y', strtotime($date_select))}} 
+            </td>
+            <td width='10%' align='center'>{{$resident_count}}
+                <div class='green'> </div>resident
+            </td>
+            <td width='10%' align='center'>{{$non_resident_count}}
+                <div class='violet'> </div>non-resident
+            </td>
+            <td width='10%' align='center'>{{$unknown}}
+                <div class='grey'> </div>unknown
+            </td>
+        </tr>
+    </table>
+    
+    
+    
     <table border='1' >
         <tr style='background-color:yellow;'>
             <td width='20%'>
@@ -70,6 +100,7 @@
             <td align='center' width='10%'>
                 Total Amount Due
             </td>
+            
         </tr>
         @php
         $total = 0;
@@ -122,13 +153,24 @@
             <td align='right'>
                 {{number_format(($soa_payment->rate * $soa_payment->lot_size),2)}}
             </td>
-            <td align='right'>
+            
+            @if($soa_payment->client_status == 'resident')
+            <td align='right' style='background-color:green;'>
                 {{number_format(($total_amout_due),2)}}
             </td>
+            @elseif($soa_payment->client_status == 'non-resident')
+            <td align='right' style='background-color:blueviolet;'>
+                {{number_format(($total_amout_due),2)}}
+            </td>
+            @else
+            <td align='right' style='background-color:grey;'>
+                {{number_format(($total_amout_due),2)}}
+            </td>
+            @endif
         </tr>
         @php
-            $total_association_dues = $total_association_dues + $amount_due;
-            $total = $total + $total_amout_due;
+        $total_association_dues = $total_association_dues + $amount_due;
+        $total = $total + $total_amout_due;
         @endphp
         @endforeach
         <tr style='background-color:yellow;'>

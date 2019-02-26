@@ -291,7 +291,7 @@
                 }
                 else
                 {
-                    $latest_interest = $soa_payment->previos_bill*.02;
+                    $latest_interest = ($soa_payment->previos_bill - $last_payment)*.02;
                 }
                 @endphp
                 
