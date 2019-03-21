@@ -35,7 +35,7 @@
     </table>
     <br>
     
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:12px' >
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:16px' >
         <tr>
             <td valign="top"  width='15%'>
                 Name
@@ -113,7 +113,7 @@
     </table>
     <br>
     
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:12px' >
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:16px' >
         <tr>
             <td valign="top"  width='15%'>
                 
@@ -191,7 +191,7 @@
         </tr>
     </table>
     <br>
-    <table width="100%" cellspacing="0"  style='font-size:12px' frame="box">
+    <table width="100%" cellspacing="0"  style='font-size:16px' frame="box">
         <tr>
             <td valign="top" colspan='3'  >
                 <b>Overdues Charges</b>
@@ -366,7 +366,7 @@
             </td>
         </tr>
     </table>
-    <p style='font-size:10px;'><b>Note:</b>	<br>				
+    <p style='font-size:12px;'><b>Note:</b>	<br>				
         1.Please pay directly to Admin Office during office hours and present this BIlling Statement when paying, pay on or before dute date to avoid any inconvenience.<br>
         2. Please always ask for Official Receipt upon payment.	<br>					
         3. For check Payment, please make check payable to: Villaggio di Xavier Dolce Vita HOA, Inc.			<br>			

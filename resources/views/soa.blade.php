@@ -89,11 +89,14 @@
                                             <th scope="col" style='width:100px'>Name</th>
                                             <th scope="col">Lot Number</th>
                                             <th scope="col">HOA ID</th>
+                                            <th scope="col">Total Amount(OBR)</th>
+                                            <th scope="col">Payment</th>
+                                            <th scope="col">Total</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($soa_payments as $soa_payment)
+                                        @foreach($soa_payments as $key => $soa_payment)
                                         <tr>
                                             @php
                                             if(($soa_payment->billing_number/10) < 1 )
@@ -113,6 +116,9 @@
                                             <td scope="col" style='width:100px'> <span title='{{$soa_payment->client_name}}'>{{str_limit($soa_payment->client_name, 25)}}</span></td>
                                             <td scope="col">{{$soa_payment->client_lot_number}}</td>
                                             <td scope="col">{{$soa_payment->client_hoa_id}}</td>
+                                            <td scope="col">{{number_format(($data[$key]['total_amout_due']),2)}}</td>
+                                            <td scope="col">{{number_format(($data[$key]['payment']),2)}}</td>
+                                            <td scope="col">{{number_format(($data[$key]['soa_summary']),2)}}</td>
                                             <td class="text-left">
                                                 <div class="dropdown">
                                                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

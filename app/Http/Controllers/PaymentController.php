@@ -50,11 +50,68 @@ class PaymentController extends Controller
         ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','payments.amount as payment',
         'payments.remarks as payment_remarks','payments.date_paid as payment_date','payments.type as payment_type','payments.or_number as or_number','payments.id as payment_id')
         ->get();
+
+        $total_payment = 0;
+            $obr = 0;
+        $data=array();
+        foreach($soa_payments as $key => $soa_payment)
+        {
+            $payment = Payment::where('soa_number',$soa_payment->id)->first();
+            if($payment == null)
+            {
+                $total_payment = $total_payment;
+                $payment_a = 0;
+            }
+            else
+            {
+                $total_payment = $total_payment + $payment->amount;
+                $payment_a = $payment->amount;
+            }
+            
+            $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
+            if($soa_old == null)
+            {
+                $last_payment = 0;
+            }
+            else
+            {
+                $payment = Payment::where('soa_number',$soa_old->id)->first();
+                if($payment == null)
+                {
+                    
+                    $last_payment = 0;
+                }
+                else
+                {
+                    $last_payment = $payment->amount;
+                }
+            }
+            $total_current_charges = ($soa_payment->special_assessment+$soa_payment->others+($soa_payment->rate * $soa_payment->lot_size));
+            
+            $total_overdue_charges = $soa_payment->previos_bill+$soa_payment->previos_interest-$soa_payment->discount-$last_payment;
+            if(($soa_payment->previos_bill - $last_payment) <= 0)
+            {
+                $latest_interest = 0;
+            }
+            else
+            {
+                $latest_interest = $soa_payment->previos_bill*.02;
+            }
+            
+            $sub_total = $total_overdue_charges + $latest_interest - $soa_payment->adjustment;
+            $total_amout_due = $sub_total + $total_current_charges;
+            $obr = $obr + $total_amout_due;
+            $soa_summary = $total_amout_due - $payment_a;
+            
+            array_push($data,array("id" => $soa_payment->id,"total_amout_due" => $total_amout_due,"payment" => $payment_a,"soa_summary" => $soa_summary));
+      
+         }
         $soa_last_month = Soapayment::orderBy('id','desc')->first();
         $name_of_month =  date(('F'),strtotime($soa_last_month->date_soa));
         return view('soa',array (
             'soa_payments' => $soa_payments,                
             'name_of_month' => $name_of_month,    
+            'data' => $data,  
             'soa_last_month' => date("Y-m",(strtotime(date("Y-m", strtotime($soa_last_month->date_soa)) . " +1 month"))), 
         ));
     }

@@ -53,6 +53,12 @@
       -webkit-appearance: none; 
       margin: 0; 
     }
+    @media (min-width: 768px) {
+      .modal-xl {
+        width: 90%;
+      max-width:1200px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -171,6 +177,11 @@
               <i class="ni ni-chart-bar-32 text-orange"></i>SOA History
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/disbursement') }}" onclick='show()'>
+              <i class="ni ni-money-coins text-infor"></i>Disbursement
+            </a>
+          </li>
         </ul>
         <!-- Divider -->
         <hr class="my-3">
@@ -199,6 +210,12 @@
   <script>
     $(document).ready(function() {
       $('#example').DataTable();
+    } );
+    $(document).ready(function() {
+      $('#example1').DataTable();
+    } );
+    $(document).ready(function() {
+      $('#example2').DataTable();
     } );
     function show() {
       document.getElementById("myDiv").style.display="block";

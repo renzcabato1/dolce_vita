@@ -37,20 +37,33 @@ class UserController extends Controller
         {
             $total_payment = 0;
             $obr = 0;
+            $live_payor = 0;
+            $un_paid = 0;
+            $advance_payor = 0;
             $date_today = date('Y-m-d');
             $clients_count = Client::count();
             $receipts_count = Careceipt::where('created_at','>=',$date_today)->count();
-            $soa_payments = Soapayment::where('done','0')->get();
-            foreach($soa_payments as $soa_payment)
+            $soa_payments = Soapayment::where('done','0')
+            ->leftJoin('clients','soapayments.client_id','=','clients.id') 
+            ->select('soapayments.*','clients.name','clients.lot_number')
+            ->get();
+            $advance_payor_data=array();
+            $un_paid_data=array();
+            $live_payor_data=array();
+            foreach($soa_payments as $key => $soa_payment)
             {
+               
+              
                 $payment = Payment::where('soa_number',$soa_payment->id)->first();
                 if($payment == null)
                 {
                     $total_payment = $total_payment;
+                    $payment_a = 0;
                 }
                 else
                 {
                     $total_payment = $total_payment + $payment->amount;
+                    $payment_a = $payment->amount;
                 }
                 
                 $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
@@ -86,8 +99,27 @@ class UserController extends Controller
                 $sub_total = $total_overdue_charges + $latest_interest - $soa_payment->adjustment;
                 $total_amout_due = $sub_total + $total_current_charges;
                 $obr = $obr + $total_amout_due;
-            }
-            
+                $soa_summary = $total_amout_due - $payment_a;
+                if($soa_summary == 0)
+                {
+                    $live_payor = $live_payor + 1 ;
+                    array_push($live_payor_data,array("name" => $soa_payment->name,"lot_number" => $soa_payment->lot_number,"total_amout_due" => $total_amout_due,"payment" => $payment_a,"soa_summary" => $soa_summary));
+          
+                }
+                else if($soa_summary < 0)
+                {
+                    $advance_payor = $advance_payor + 1;
+                    array_push($advance_payor_data,array("name" => $soa_payment->name,"lot_number" => $soa_payment->lot_number,"total_amout_due" => $total_amout_due,"payment" => $payment_a,"soa_summary" => $soa_summary));
+          
+                } 
+                else if($soa_summary > 0)
+                {
+                    $un_paid = $un_paid + 1 ;
+                    array_push($un_paid_data,array("name" => $soa_payment->name,"lot_number" => $soa_payment->lot_number,"total_amout_due" => $total_amout_due,"payment" => $payment_a,"soa_summary" => $soa_summary));
+          
+                  
+                }
+             }
             $soa_last_month = Soapayment::orderBy('id','desc')->first();
             $name_of_month =  date(('F'),strtotime($soa_last_month->date_soa));
             return view('home',array(
@@ -96,6 +128,13 @@ class UserController extends Controller
                 'name_of_month' => $name_of_month,
                 'total_payment' => $total_payment,
                 'obr' => $obr,
+                'live_payor' => $live_payor,
+                'un_paid' => $un_paid,
+                'advance_payor' => $advance_payor,
+                'live_payor_datas' => $live_payor_data,
+                'un_paid_datas' => $un_paid_data,
+                'advance_payor_datas' => $advance_payor_data,
+                
                 
             ));
         }

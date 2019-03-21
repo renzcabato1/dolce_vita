@@ -125,5 +125,53 @@
       </div>
     </div>
   </div>
+  <div class="container mt--7" style='float:left;margin-left:25px'>
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <h3 class="mb-0">SOA Summary </h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Type</th>
+                  <th scope="col">Count</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="col">Advanced Payor</th>
+                  <td scope="col">{{$advance_payor}}</th>
+                  <td scope="col"><a data-toggle="modal" href="#advanced" class="btn btn-primary btn-lg">View</a></th>
+                </tr>
+                <tr>
+                  <td scope="col">Unpaid</th>
+                  <td scope="col">{{$un_paid}}</th>
+                  <td scope="col"><a data-toggle="modal" href="#unpaid" class="btn btn-primary btn-lg">View</a></th>
+                </tr>
+                <tr>
+                  <td scope="col">Live Payor</th>
+                  <td scope="col">{{$live_payor}}</th>
+                  <td scope="col"><a data-toggle="modal" href="#live_payor" class="btn btn-primary btn-lg">View</a>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Dark table -->
+    
+  </div>
+  @include('live_payor')
+  @include('unpaide')
+  @include('advanced')
+    
 </div>
+
 @endsection
