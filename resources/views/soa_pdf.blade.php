@@ -366,7 +366,7 @@
             </td>
         </tr>
     </table>
-    <p style='font-size:12px;'><b>Note:</b>	<br>				
+    <p style='font-size:10px;'><b>Note:</b>	<br>				
         1.Please pay directly to Admin Office during office hours and present this BIlling Statement when paying, pay on or before dute date to avoid any inconvenience.<br>
         2. Please always ask for Official Receipt upon payment.	<br>					
         3. For check Payment, please make check payable to: Villaggio di Xavier Dolce Vita HOA, Inc.			<br>			

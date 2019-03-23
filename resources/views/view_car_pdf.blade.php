@@ -17,12 +17,13 @@
         }
         body{
             font-family: Calibri;
-            font-size:12px;
+            font-size:12px; 
         }
     </style>
 </head>
 <body>
-        <table width="50%" border="0" cellspacing="0" cellpadding="0">
+<div style=' border: 1px solid black;width:50%;'>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr >
                 <td  align='center' width='100px'> 
                     <img src='{{ asset('navbar/img/brand/blue.png')}}' width='90px' >
@@ -50,7 +51,7 @@
             </tr>
         </table>
         <br>
-        <table width="50%" border="0" cellspacing="0" cellpadding="0">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td valign="top">
                     <p style='float:right;font-size:12px;'>Date:  <b>{{date('M. d, Y', strtotime($careceipt->date))}}</b></p>
@@ -59,22 +60,23 @@
         </table>
         <br>
         <br>
-        <table width="50%" border="0" cellspacing="0" cellpadding="0">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr align='left'>
                 <td valign="top">
-                    <p>Received from <b><u>{{$careceipt->name}}</u></b> of <b><u>{{$careceipt->for_what}}</u></b> the cash amount of <b><u>{{$careceipt->amount_word. '(PHP '. number_format($careceipt->amount,2).')' }}</u></b> as payment for <b><u>{{$careceipt->as_payment}}</u></b>.</p>
+                    <p style='font-size:16px;'>Received from <b><u>{{$careceipt->name}}</u></b> of <b><u>{{$careceipt->for_what}}</u></b> the cash amount of <b><u>{{$careceipt->amount_word. ' (PHP '. number_format($careceipt->amount,2).')' }}</u></b> as payment for <b><u>{{$careceipt->as_payment}}</u></b>.</p>
                 </td>
             </tr>
         </table>
         <br>
         <br>
-        <table width="50%" border="0" cellspacing="0" cellpadding="0">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr align='left'>
                 <td valign="top">
                     <p style='float:right;font-size:14px;'> By: <b><u>{{$name_by->name}}</u></b></p>
                 </td>
             </tr>
         </table>
+        </div>
 </body>
 </html>
 

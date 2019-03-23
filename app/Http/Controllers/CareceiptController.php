@@ -174,8 +174,10 @@ class CareceiptController extends Controller
          'careceipt' => $careceipt,
          'name_by' => $name_by,
         
-        ));
-        return $pdf->stream('soa.pdf');
+        ))->setPaper('letter', 'landscape');
+        return $pdf->stream('soa.pdf','L
+        
+        
+        ');
     }
-    
 }                    
