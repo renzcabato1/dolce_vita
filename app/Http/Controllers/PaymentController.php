@@ -330,7 +330,11 @@ class PaymentController extends Controller
     }
     public function add_payment(Request $request, $id)
     {
-        
+
+        $request->validate([
+            'or_number' => 'required|unique:payments,or_number|max:255'
+        ]);
+
         $data = new Payment;
         $data->amount = $request->amount;
         $data->or_number = $request->or_number;
@@ -345,6 +349,10 @@ class PaymentController extends Controller
     }
     public function save_edit_payment(Request $request, $id)
     {
+        $request->validate([
+            'or_number' => 'required|unique:payments,or_number'. $id,
+            ]);
+
         $data = Payment::findOrfail($id);
         $data->amount = $request->amount;
         $data->or_number = $request->or_number;

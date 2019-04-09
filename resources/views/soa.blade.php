@@ -125,11 +125,11 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        @if($soa_payment->payment == null)
-                                                        <a class="dropdown-item" data-toggle="modal" data-target="#add_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Add Payment</a>
+                                                        @if(is_numeric($soa_payment->payment))
+                                                        <a class="dropdown-item" data-toggle="modal" data-target="#edit_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Edit Payment</a>
                                                         
                                                         @else
-                                                        <a class="dropdown-item" data-toggle="modal" data-target="#edit_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Edit Payment</a>
+                                                        <a class="dropdown-item" data-toggle="modal" data-target="#add_payment{{$soa_payment->id}}" data-toggle="add_payment"  href="#">Add Payment</a>
                                                         
                                                         @endif
                                                         <a class="dropdown-item" data-toggle="modal" data-target="#edit_soa{{$soa_payment->id}}" data-toggle="edit"  href="#">Edit</a>
