@@ -46,27 +46,32 @@ class PaymentController extends Controller
     {
         $soa_payments = Soapayment::where('done','0')
         ->leftJoin('clients','soapayments.client_id','=','clients.id')
-        ->leftJoin('payments','soapayments.id','=','payments.soa_number')
-        ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','payments.amount as payment',
-        'payments.remarks as payment_remarks','payments.date_paid as payment_date','payments.type as payment_type','payments.or_number as or_number','payments.id as payment_id')
+        ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address')
         ->get();
 
         $total_payment = 0;
             $obr = 0;
         $data=array();
+        $last_payment = 0;
+        $payment_a = 0;
         foreach($soa_payments as $key => $soa_payment)
         {
-            $payment = Payment::where('soa_number',$soa_payment->id)->first();
-            if($payment == null)
-            {
-                $total_payment = $total_payment;
-                $payment_a = 0;
-            }
-            else
-            {
-                $total_payment = $total_payment + $payment->amount;
-                $payment_a = $payment->amount;
-            }
+            $payment = Payment::where('soa_number',$soa_payment->id)->get();
+            if(!$payment->isEmpty())
+                {
+                    foreach($payment as $pay)
+                    {
+                        $total_payment = $total_payment + $pay->amount;
+                        $payment_a =  $payment_a  + $pay->amount;
+                    }
+                   
+                }
+                else
+                {
+                    $total_payment = $total_payment;
+                    $payment_a = 0;
+                   
+                }
             
             $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
             if($soa_old == null)
@@ -83,8 +88,22 @@ class PaymentController extends Controller
                 }
                 else
                 {
-                    $last_payment = $payment->amount;
+                      $payment = Payment::where('soa_number',$soa_old->id)->get();
+                if(!$payment->isEmpty())
+                    {
+                        foreach($payment as $pay)
+                        {
+                            $last_payment = $last_payment + $pay->amount;
+                        }
+                       
+                    }
+                    else
+                    {
+                        $last_payment = 0;
+                    }
+                   
                 }
+              
             }
             $total_current_charges = ($soa_payment->special_assessment+$soa_payment->others+($soa_payment->rate * $soa_payment->lot_size));
             
@@ -238,16 +257,20 @@ class PaymentController extends Controller
             }
             else
             {
-                $payment = Payment::where('soa_number',$soa_old->id)->first();
-                if($payment == null)
-                {
-                    
-                    $payments = 0;
-                }
-                else
-                {
-                    $payments = $payment->amount;
-                }
+                
+                $payment = Payment::where('soa_number',$soa_old->id)->get();
+                if(!$payment->isEmpty())
+                    {
+                        foreach($payment as $pay)
+                        {
+                            $payments = $payments + $pay->amount;
+                        }
+                       
+                    }
+                    else
+                    {
+                        $payments = 0;
+                    }
             }
             $rate =  $soa_payment->rate;
             $lot_size =  $soa_payment->lot_size;
@@ -473,23 +496,72 @@ class PaymentController extends Controller
             return $pdf->stream('soa_all_obr.pdf');
             
         }
-        public function payment_report_pdf(Request $request)
-        {
-            $date_from = $request->date_from;
-            $date_to = $request->date_to;
-            $results = Payment::whereBetween('date_paid',[$date_from, $date_to])
-            ->leftJoin('soapayments','payments.soa_number','=','soapayments.id')
-            ->leftJoin('clients','soapayments.client_id','=','clients.id')
-            ->select('payments.*','clients.name as client_name','clients.lot_number')
-            ->orderBy('date_paid','asc')
-            ->get();
-            $pdf = PDF::loadView('payment_report_pdf',array(
-                'date_from' => $date_from,
-                'date_to' => $date_to,
-                'results' => $results,
-            ));
-            return $pdf->stream('payment_report.pdf');
-            
-        }
+    public function payment_report_pdf(Request $request)
+    {
+        $date_from = $request->date_from;
+        $date_to = $request->date_to;
+        $results = Payment::whereBetween('date_paid',[$date_from, $date_to])
+        ->leftJoin('soapayments','payments.soa_number','=','soapayments.id')
+        ->leftJoin('clients','soapayments.client_id','=','clients.id')
+        ->select('payments.*','clients.name as client_name','clients.lot_number')
+        ->orderBy('date_paid','asc')
+        ->get();
+        $pdf = PDF::loadView('payment_report_pdf',array(
+            'date_from' => $date_from,
+            'date_to' => $date_to,
+            'results' => $results,
+        ));
+        return $pdf->stream('payment_report.pdf');
+        
     }
+    public function payment_show()
+    {   
+        
+        $soapayments_id = Soapayment::where('done','=','0')->pluck('id')->toArray();
+        $payments = Payment::whereIn('soa_number',$soapayments_id)
+        ->leftJoin('soapayments','payments.soa_number','=','soapayments.id')
+        ->leftJoin('clients','soapayments.client_id','=','clients.id')
+        ->select('clients.*','payments.*','clients.id as client_id')
+        ->get();
+        $or_numbers = Payment::pluck('or_number')->toArray();
+        $clients = Client::orderBy('name','asc')->get();
+        return view('view_payment',array (
+            'payments' => $payments, 
+            'clients' => $clients, 
+            'or_numbers' => $or_numbers, 
+        ));
+    }
+    public function client_view_infor(Request $request)
+    {
+        $client = Client::findORfail($request->lot_number_id);
+
+        return $client;
+    }
+    public function new_payment(Request $request)
+    {
+        $request->validate([
+            'or_number' => 'required|unique:payments,or_number|max:255'
+        ]);
+
+        $soa_payment = Soapayment::where('client_id',$request->lot_number)->where('done',0)->first();
+        $data = new Payment;
+        $data->amount = $request->amount;
+        $data->or_number = $request->or_number;
+        $data->type = $request->type;
+        $data->date_paid = $request->date_of_payment;
+        $data->remarks = $request->remarks;
+        $data->soa_number = $soa_payment->id;
+        $data->add_by = auth()->user()->id;
+        $data->save();
+        $request->session()->flash('status','Successfully Added Payment');
+        return back();
+    }
+    public function delete_payment(Request $request, $payment_id)
+    {
+        $payment = Payment::find($payment_id);    
+        $payment->delete();
+        $request->session()->flash('status',' Successfully Deleted!');
+        return back();
+    }
+}
     

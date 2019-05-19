@@ -25,13 +25,13 @@
                         </div>
                         <div class='col-md-3'>
                             <div class="form-group">
-                                <label>Discount:</label>
+                                <label>Discount/Principal Adjustment:</label>
                             <input class="form-control" type="number"  step='0.01'  value='{{$soa_payment->discount}}' name='discount'  placeholder='111.00'  required>
                             </div>
                         </div>
                         <div class='col-md-3'>
                             <div class="form-group">
-                                <label>Adjustment:</label>
+                                <label>Interest Adjustment:</label>
                                 <input class="form-control" type="number"   step='0.01'  value='{{$soa_payment->adjustment}}' name='adjustment'  placeholder='111.00'  required>
                             </div>
                         </div>

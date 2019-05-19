@@ -40,6 +40,7 @@ class UserController extends Controller
             $live_payor = 0;
             $un_paid = 0;
             $advance_payor = 0;
+            
             $date_today = date('Y-m-d');
             $clients_count = Client::count();
             $receipts_count = Careceipt::where('created_at','>=',$date_today)->count();
@@ -52,18 +53,23 @@ class UserController extends Controller
             $live_payor_data=array();
             foreach($soa_payments as $key => $soa_payment)
             {
-               
-              
-                $payment = Payment::where('soa_number',$soa_payment->id)->first();
-                if($payment == null)
+                
+                $payment = Payment::where('soa_number',$soa_payment->id)->get();
+                
+                if(!$payment->isEmpty())
                 {
-                    $total_payment = $total_payment;
-                    $payment_a = 0;
+                    foreach($payment as $pay)
+                    {
+                        $total_payment = $total_payment + $pay->amount;
+                        $payment_a = $payment_a  +  $pay->amount;
+                    }
+                   
                 }
                 else
                 {
-                    $total_payment = $total_payment + $payment->amount;
-                    $payment_a = $payment->amount;
+                    $total_payment = $total_payment;
+                    $payment_a = 0;
+                   
                 }
                 
                 $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
@@ -73,17 +79,21 @@ class UserController extends Controller
                 }
                 else
                 {
-                    $payment = Payment::where('soa_number',$soa_old->id)->first();
-                    if($payment == null)
-                    {
-                        
-                        $last_payment = 0;
-                    }
-                    else
-                    {
-                        $last_payment = $payment->amount;
-                    }
+                    $payment = Payment::where('soa_number',$soa_old->id)->get();
+                    if(!$payment->isEmpty())
+                        {
+                            foreach($payment as $pay)
+                            {
+                                $payments = $payments + $pay->amount;
+                            }
+                           
+                        }
+                        else
+                        {
+                            $payments = 0;
+                        }
                 }
+                $last_payment = $payments;
                 $total_current_charges = ($soa_payment->special_assessment+$soa_payment->others+($soa_payment->rate * $soa_payment->lot_size));
                 
                 $total_overdue_charges = $soa_payment->previos_bill+$soa_payment->previos_interest-$soa_payment->discount-$last_payment;

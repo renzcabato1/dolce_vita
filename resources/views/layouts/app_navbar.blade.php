@@ -15,9 +15,13 @@
   <!-- Icons -->
   <link href="{{ asset('navbar/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
   <link href="{{ asset('navbar/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ asset('chosen/chosen.css') }}">
   <!-- Argon CSS -->
   <link type="text/css" href="navbar/css/argon.css?v=1.0.0" rel="stylesheet">
+  
   <style>
+    
     .loader {
       position: fixed;
       left: 0px;
@@ -53,6 +57,11 @@
       -webkit-appearance: none; 
       margin: 0; 
     }
+    .error
+        {
+            color:red;
+            font-size: 10px;
+        }
     @media (min-width: 768px) {
       .modal-xl {
         width: 90%;
@@ -178,8 +187,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('/disbursement') }}" onclick='show()'>
-              <i class="ni ni-money-coins text-infor"></i>Disbursement
+            <a class="nav-link" href="{{ url('/payment                                                                                                                                                                            ') }}" onclick='show()'>
+              <i class="ni ni-money-coins text-infor"></i>Payment
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/ledger                                                                                                                                                                            ') }}" onclick='show()'>
+              <i class="ni ni-money-coins text-infor"></i>Ledger
             </a>
           </li>
         </ul>
@@ -194,9 +208,9 @@
   <!-- Core -->
   <script src="{{ asset('navbar/vendor/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ asset('navbar/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="{{ asset('js/jquery-3.3.1.js') }}"></script>
+  <script src="{{ asset('jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('dataTables.bootstrap4.min.js') }}"></script>
   <!-- Optional JS -->
   <script src="{{ asset('navbar/vendor/chart.js/dist/Chart.min.js') }}"></script>
   <script src="{{ asset('navbar/vendor/chart.js/dist/Chart.extension.js') }}"></script>
@@ -206,6 +220,8 @@
   <div id = "myDiv" style="display:none;" class="loader">
   </div>
   
+<script src="{{ asset('/chosen/chosen.jquery.js')}}" type="text/javascript"></script>
+<script src="{{ asset('/chosen/docsupport/init.js')}}" type="text/javascript" charset="utf-8"></script> 
   
   <script>
     $(document).ready(function() {

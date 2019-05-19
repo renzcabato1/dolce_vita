@@ -1,0 +1,250 @@
+@font-face { 
+font-family: Century; 
+src: url('GOTHIC.ttf'); 
+} 
+.body{ 
+	font-family: Century;
+		  /*background-image: url("wallpaper3.jpg") ;*/
+		  
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+   color:black;
+   
+  /* Preserve aspet ratio */
+ 
+ } 
+ 
+ .linha{ 
+   text-align:center;
+ overflow-x: scroll;
+overflow-y: hidden;
+ padding:15px;	
+ height:auto; 
+ display:table; 
+ } 
+ .tile:hover{ 
+ cursor : pointer;
+border-color:white;
+transform: scale(1.07);
+ border-width: 2px;
+ border-style: solid;
+ border-color:white;
+ 
+ }
+.tile{ 
+
+	font-weight: bold;
+	text-align: center;
+	width: 320px;
+	height: 180px;
+	float:left; 
+	margin:4px; 
+	display: inline-block;  
+} 
+.cpu{
+	font-family: Century;
+  background-image: url("cpu support.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.sap{
+	font-family: Century;
+  background-image: url("sap support.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.desktop{
+	font-family: Century;
+  background-image: url("desktop support.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.tile1{
+	font-family: Century;
+  background-image: url("Mancom.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.email{
+	font-family: Century;
+  background-image: url("Email.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.qmd{
+	font-family: Century;
+  background-image: url("QMD Centralised.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.qmde{
+	font-family: Century;
+  background-image: url("QMD Eforms.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.hr{
+	font-family: Century;
+  background-image: url("HRPortal.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.truck{
+	font-family: Century;
+  background-image: url("Truck.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.lafil{
+	font-family: Century;
+  background-image: url("Lafilgroup.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.hre{
+	font-family: Century;
+  background-image: url("HR ESS.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.icportallocal {
+	font-family: Century;
+  background-image: url("icportallocal.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.icportalout {
+	font-family: Century;
+  background-image: url("icportalout.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.Qbataan {
+	font-family: Century;
+  background-image: url("Qbataan.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.Qmanila {
+	font-family: Century;
+  background-image: url("Qmanila.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.gps {
+	font-family: Century;
+  background-image: url("gps.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.esoa {
+	font-family: Century;
+  background-image: url("esoa.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.mobile {
+	font-family: Century;
+  background-image: url("mobile.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+.salesforce {
+	font-family: Century;
+  background-image: url("salesforce.jpg") ;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: auto;
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+}
+p{
+	background-color:rgba(255,255,255,0.5);
+}
+img{
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	margin-top:20px;
+	width:100px;
+	height:100px;
+}
+a{
+	
+	color:black;
+}
