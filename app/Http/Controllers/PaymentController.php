@@ -373,7 +373,7 @@ class PaymentController extends Controller
     public function save_edit_payment(Request $request, $id)
     {
         $request->validate([
-            'or_number' => 'required|unique:payments,or_number'. $id,
+            'or_number' => 'required|unique:payments,or_number,'. $id,
             ]);
 
         $data = Payment::findOrfail($id);
