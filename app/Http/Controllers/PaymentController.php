@@ -444,8 +444,25 @@ class PaymentController extends Controller
                 }
                 else
                 {
-                    $payments[] = $payment->amount;
+                      $payment = Payment::where('soa_number',$soa_old->id)->get();
+                if(!$payment->isEmpty())
+                    {
+                        $last_payment = 0;
+                        foreach($payment as $pay)
+                        {
+                            $last_payment = $last_payment + $pay->amount;
+                          
+                        }
+                        $payments[] = $last_payment;
+                       
+                    }
+                    else
+                    {
+                        $payments[] = 0;
+                    }
+                   
                 }
+              
             }
         }
         return view('obr_report',array(
