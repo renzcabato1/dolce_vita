@@ -15,6 +15,7 @@ class LedgerController extends Controller
         $clients = Client::orderBy('name','asc')->get();
         $soapayment = [];
         $data = [];
+        $client = [];
         if($request)
         {
         $client = Client::findOrfail($client_id);
@@ -35,8 +36,6 @@ class LedgerController extends Controller
             'client_id' => $client_id,
             'soapayment' => $soapayment,
             'data' => $data,
-            
-
         ));
     }
 }

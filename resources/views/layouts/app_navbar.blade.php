@@ -192,7 +192,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('/ledger                                                                                                                                                                            ') }}" onclick='show()'>
+            <a class="nav-link" href="{{ url('/ledger?name=1                                                                                                                                                                            ') }}" onclick='show()'>
               <i class="ni ni-money-coins text-infor"></i>Ledger
             </a>
           </li>

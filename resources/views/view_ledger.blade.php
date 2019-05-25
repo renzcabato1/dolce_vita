@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <label>Name:</label>
                         <select class="chosen-select form-control"  style='height:50px;color:black' name='name' id='name'  required >
-                            <option>Select Name</option>
+                            <option></option>
                             @foreach($clients as $client)
                             <option value='{{$client->id}}'  {{ ($client->id == $client_id ? "selected":"") }}>{{$client->name}}</option>
                             @endforeach
@@ -90,7 +90,7 @@
                         <table class="table align-items-center table-flush" border='1'>
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col" colspan='11' style='width:100px'>
+                                    <th scope="col" colspan='12' style='width:100px'>
                                         Name : {{$cl->name}}<br>
                                         Area : {{$cl->area}}<br>
                                         Cost : 7<br>
@@ -104,6 +104,7 @@
                                     <th scope="col" colspan='3'>Beginning Balance</th>
                                     <th scope="col" rowspan='2'>Monthly Dues</th>
                                     <th scope="col" rowspan='2'>Payment</th>
+                                    <th scope="col" rowspan='2'>Montly Interest</th>
                                     <th scope="col" rowspan = 2>Principal Adjustment</th>
                                     <th scope="col" rowspan = 2>Interest Adjustment:</th>
                                     <th scope="col" colspan='3'>Ending Balance</th>
@@ -121,8 +122,8 @@
                             </thead>
                             <tbody>
                                 @foreach($soapayment as $key => $soa)
+                                
                                 <tr>
-                                    
                                     <td>{{date('M. Y',strtotime($soa->date_due))}}
                                     </td>
                                     <td>
@@ -141,16 +142,40 @@
                                         {{number_format(($data[$key]['payment']),2)}}
                                     </td>
                                     <td>
+                                        @php
+                                            $rate_interest = $soa->previos_bill-$data[$key]['payment'];
+                                            if($rate_interest <= 0)
+                                            {
+                                                $interest_rate = 0;
+                                            }
+                                            else 
+                                            {
+                                                $interest_rate =  $rate_interest * .02;
+                                            }
+                                        @endphp
+                                        {{number_format($interest_rate,2)}}
+                                    </td>
+                                    <td>
                                             {{number_format($soa->discount,2)}}
                                     </td>
                                     <td>
                                             {{number_format($soa->adjustment,2)}}
                                     </td>
                                     <td>
+                                        @php
+                                            $principal = $soa->previos_bill + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
+                                        @endphp
+                                         {{number_format($principal,2)}}
                                     </td>
                                     <td>
+                                        @php
+                                        $total_interest = $soa->previos_interest + $interest_rate - $soa->adjustment ;
+                                        $total_ending_balance = $total_interest +  $principal;
+                                        @endphp
+                                         {{number_format($total_interest,2)}}
                                     </td>
                                     <td>
+                                            {{number_format($total_ending_balance,2)}}
                                     </td>
                                     
                                 </tr>

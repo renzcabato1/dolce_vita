@@ -56,6 +56,8 @@ class PaymentController extends Controller
         $payment_a = 0;
         foreach($soa_payments as $key => $soa_payment)
         {
+            $last_payment = 0;
+            $payment_a = 0;
             $payment = Payment::where('soa_number',$soa_payment->id)->get();
             if(!$payment->isEmpty())
                 {
@@ -105,6 +107,7 @@ class PaymentController extends Controller
                 }
               
             }
+             
             $total_current_charges = ($soa_payment->special_assessment+$soa_payment->others+($soa_payment->rate * $soa_payment->lot_size));
             
             $total_overdue_charges = $soa_payment->previos_bill+$soa_payment->previos_interest-$soa_payment->discount-$last_payment;
@@ -128,6 +131,7 @@ class PaymentController extends Controller
             array_push($data,array("id" => $soa_payment->id,"total_amout_due" => $total_amout_due,"payment" => $payment_a,"soa_summary" => $soa_summary));
       
          }
+        //  return ($soa_payments);
         $soa_last_month = Soapayment::orderBy('id','desc')->first();
         $name_of_month =  date(('F'),strtotime($soa_last_month->date_soa));
         return view('soa',array (
@@ -250,6 +254,7 @@ class PaymentController extends Controller
         ->get();
         $payments = 0;
         foreach($soa_payments as $soa_payment){
+            $payments = 0;
             $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
             if($soa_old == null)
             {
