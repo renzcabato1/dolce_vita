@@ -36,6 +36,7 @@ class PaymentController extends Controller
                 $payment = Payment::where('soa_number',$soa_old->id)->get();
                 if(!$payment->isEmpty())
                 {
+                    $last_payment=0;
                     foreach($payment as $pay)
                     {
                         $last_payment = $last_payment + $pay->amount;
