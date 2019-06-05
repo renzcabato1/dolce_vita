@@ -46,4 +46,7 @@ Route::get('/get-client-infor','PaymentController@client_view_infor');
 Route::get('/delete-payment/{payment_id}','PaymentController@delete_payment');
 Route::post('add-payment','PaymentController@new_payment');
 Route::get('/ledger','LedgerController@view_ledger');
+Route::get('/disbursement','DisbursementController@disbursement');
+Route::post('add-disbursement','DisbursementController@new_disbursement');
+Route::get('/delete-disbursement/{id}','DisbursementController@delete_disbursement');
 });

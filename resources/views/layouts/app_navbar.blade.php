@@ -15,7 +15,7 @@
   <!-- Icons -->
   <link href="{{ asset('navbar/vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
   <link href="{{ asset('navbar/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-
+  
   <link rel="stylesheet" href="{{ asset('chosen/chosen.css') }}">
   <!-- Argon CSS -->
   <link type="text/css" href="navbar/css/argon.css?v=1.0.0" rel="stylesheet">
@@ -58,14 +58,14 @@
       margin: 0; 
     }
     .error
-        {
-            color:red;
-            font-size: 10px;
-        }
+    {
+      color:red;
+      font-size: 10px;
+    }
     @media (min-width: 768px) {
       .modal-xl {
         width: 90%;
-      max-width:1200px;
+        max-width:1200px;
       }
     }
   </style>
@@ -187,15 +187,21 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('/payment                                                                                                                                                                            ') }}" onclick='show()'>
+            <a class="nav-link" href="{{ url('/payment') }}" onclick='show()'>
               <i class="ni ni-money-coins text-infor"></i>Payment
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('/ledger?name=1                                                                                                                                                                            ') }}" onclick='show()'>
+            <a class="nav-link" href="{{ url('/ledger?name=1') }}" onclick='show()'>
               <i class="ni ni-money-coins text-infor"></i>Ledger
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/disbursement') }}" onclick='show()'>
+              <i class="ni ni-money-coins text-infor"></i>Disbursement
+            </a>
+          </li>
+          
         </ul>
         <!-- Divider -->
         <hr class="my-3">
@@ -220,8 +226,8 @@
   <div id = "myDiv" style="display:none;" class="loader">
   </div>
   
-<script src="{{ asset('/chosen/chosen.jquery.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/chosen/docsupport/init.js')}}" type="text/javascript" charset="utf-8"></script> 
+  <script src="{{ asset('/chosen/chosen.jquery.js')}}" type="text/javascript"></script>
+  <script src="{{ asset('/chosen/docsupport/init.js')}}" type="text/javascript" charset="utf-8"></script> 
   
   <script>
     $(document).ready(function() {
