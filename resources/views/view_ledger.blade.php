@@ -121,20 +121,39 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                $ending_principal = 0;
+                                $ending_interest = 0;
+                                $ending_total = 0;
+                                @endphp
                                 @foreach($soapayment as $key => $soa)
-                                
                                 <tr>
                                     <td>{{date('M. Y',strtotime($soa->date_due))}}
                                     </td>
+                                    @if($key == 0)
                                     <td>
-                                            {{number_format($soa->previos_bill,2)}}
+                                        {{number_format($soa->previos_bill,2)}}
                                     </td>
+                                    
+                                    
                                     <td>
-                                            {{number_format($soa->previos_interest,2)}}
+                                        {{number_format($soa->previos_interest,2)}}
                                     </td>
                                     <td>
                                         {{number_format($soa->previos_bill+$soa->previos_interest,2)}}
                                     </td>
+                                    @else
+                                    <td>
+                                        {{number_format($ending_principal,2)}}
+                                    </td>
+                                    <td>
+                                        {{number_format($ending_interest,2)}}
+                                    </td>
+                                    <td>
+                                        {{number_format($ending_total,2)}}
+                                    </td>
+                                    @endif
+                                    
                                     <td>
                                         {{number_format(7*$cl->area,2)}}
                                     </td>
@@ -143,39 +162,42 @@
                                     </td>
                                     <td>
                                         @php
-                                            $rate_interest = $soa->previos_bill-$data[$key]['payment'];
-                                            if($rate_interest <= 0)
-                                            {
-                                                $interest_rate = 0;
-                                            }
-                                            else 
-                                            {
-                                                $interest_rate =  $rate_interest * .02;
-                                            }
+                                        $rate_interest = $soa->previos_bill-$data[$key]['payment'];
+                                        if($rate_interest <= 0)
+                                        {
+                                            $interest_rate = 0;
+                                        }
+                                        else 
+                                        {
+                                            $interest_rate =  $rate_interest * .02;
+                                        }
                                         @endphp
                                         {{number_format($interest_rate,2)}}
                                     </td>
                                     <td>
-                                            {{number_format($soa->discount,2)}}
+                                        {{number_format($soa->discount,2)}}
                                     </td>
                                     <td>
-                                            {{number_format($soa->adjustment,2)}}
+                                        {{number_format($soa->adjustment,2)}}
                                     </td>
                                     <td>
                                         @php
-                                            $principal = $soa->previos_bill + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
+                                        $principal = $soa->previos_bill + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
+                                        $ending_principal = $principal;
                                         @endphp
-                                         {{number_format($principal,2)}}
+                                        {{number_format($principal,2)}}
                                     </td>
                                     <td>
                                         @php
                                         $total_interest = $soa->previos_interest + $interest_rate - $soa->adjustment ;
                                         $total_ending_balance = $total_interest +  $principal;
+                                        $ending_interest =  $total_interest;
+                                        $ending_total = $total_ending_balance ;
                                         @endphp
-                                         {{number_format($total_interest,2)}}
+                                        {{number_format($total_interest,2)}}
                                     </td>
                                     <td>
-                                            {{number_format($total_ending_balance,2)}}
+                                        {{number_format($total_ending_balance,2)}}
                                     </td>
                                     
                                 </tr>
