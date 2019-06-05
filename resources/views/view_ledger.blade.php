@@ -182,14 +182,14 @@
                                     </td>
                                     <td>
                                         @php
-                                        $principal = $soa->previos_bill + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
+                                        $principal = $ending_principal + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
                                         $ending_principal = $principal;
                                         @endphp
                                         {{number_format($principal,2)}}
                                     </td>
                                     <td>
                                         @php
-                                        $total_interest = $soa->previos_interest + $interest_rate - $soa->adjustment ;
+                                        $total_interest = $ending_interest + $interest_rate - $soa->adjustment ;
                                         $total_ending_balance = $total_interest +  $principal;
                                         $ending_interest =  $total_interest;
                                         $ending_total = $total_ending_balance ;
