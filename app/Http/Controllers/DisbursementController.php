@@ -19,6 +19,11 @@ class DisbursementController extends Controller
     }
     public function new_disbursement(Request $request)
     {
+        $request->validate([
+            'cv_number' => 'required|unique:disbursements,cv_number|max:255',
+            'check_number' => 'required|unique:disbursements,check_number|max:255',
+            'rplf_number' => 'required|unique:disbursements,rplf_number|max:255'
+            ]);
         $data = new Disbursement;
         $data->payee = $request->payee;
         $data->check_date = $request->check_date;
