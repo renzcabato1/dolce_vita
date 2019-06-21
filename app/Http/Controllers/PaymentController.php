@@ -7,6 +7,7 @@ use App\Client;
 use App\Obr;
 use App\Payment;
 use App\Careceipt;
+use App\Disbursement;
 use Illuminate\Http\Request;
 use App;
 
@@ -476,6 +477,10 @@ class PaymentController extends Controller
         {
             $results = Careceipt::whereBetween('date',[$date_from, $date_to])->orderBy('date','asc')->get();
         }
+        elseif($type == 3)
+        {
+            $results = Disbursement::whereBetween('check_date',[$date_from, $date_to])->orderBy('check_date','asc')->get();
+        }
         return view('summary_report',array(
             'date_from' => $date_from,
             'date_to' => $date_to,
@@ -573,16 +578,15 @@ class PaymentController extends Controller
             }
         }
     }
-        $pdf = PDF::loadView('obr_report_pdf_all',
-        array(
-        'soa_payments' => $soa_payments,
-        'payments' => $payments,
-        'date_select' => $date_select,
-        'resident_count' => $resident_count,
-        'non_resident_count' => $non_resident_count,
-        'unknown' => $unknown,
-        ))->setOrientation('landscape');
-        return $pdf->stream('soa_all_obr.pdf');
+    $pdf = PDF::loadView('obr_report_pdf_all',array(
+    'soa_payments' => $soa_payments,
+    'payments' => $payments,
+    'date_select' => $date_select,
+    'resident_count' => $resident_count,
+    'non_resident_count' => $non_resident_count,
+    'unknown' => $unknown))->setOrientation('landscape');
+
+    return $pdf->stream('soa_all_obr.pdf');
     }
     public function payment_report_pdf(Request $request)
     {
@@ -600,6 +604,19 @@ class PaymentController extends Controller
             'results' => $results,
         ));
         return $pdf->stream('payment_report.pdf');
+        
+    }
+    public function disbursement_report(Request $request)
+    {
+        $date_from = $request->date_from;
+        $date_to = $request->date_to;
+        $results = Disbursement::whereBetween('check_date',[$date_from, $date_to])->orderBy('check_date','asc')->get(); 
+        $pdf = PDF::loadView('disbursement_report_pdf',array(
+            'date_from' => $date_from,
+            'date_to' => $date_to,
+            'results' => $results,
+        ));
+        return $pdf->stream('disbursement_report_pdf.pdf');
         
     }
     public function payment_show()

@@ -83,25 +83,27 @@
                             </thead>
                             <tbody>
                                 @foreach($disbursements as $disbursement)
-                                <td scope="col" >{{$disbursement->payee}}</td>
-                                <td scope="col">{{date('M. d, Y',strtotime($disbursement->check_date))}}</td>
-                                <td scope="col">{{$disbursement->particulars}}</td>
-                                <td scope="col">{{$disbursement->cv_number}}</td>
-                                <td scope="col">{{$disbursement->rplf_number}}</td>
-                                <td scope="col">{{$disbursement->check_number}}</td>
-                                <td scope="col">{{number_format($disbursement->amount,2)}}</td>
-                                <td scope="col">{{$disbursement->reference}}</td>
-                                <td scope="col">{{$disbursement->remarks}}</td>
-                                <td scope="col" style='min-width:100px'>
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href='delete-disbursement/{{$disbursement->id}}' onclick="return confirm('Are you sure you want to delete this Disbursement?')" >Delete</a>
+                                <tr>
+                                    <td scope="col" >{{$disbursement->payee}}</td>
+                                    <td scope="col">{{date('M. d, Y',strtotime($disbursement->check_date))}}</td>
+                                    <td scope="col">{{$disbursement->particulars}}</td>
+                                    <td scope="col">{{$disbursement->cv_number}}</td>
+                                    <td scope="col">{{$disbursement->rplf_number}}</td>
+                                    <td scope="col">{{$disbursement->check_number}}</td>
+                                    <td scope="col">{{number_format($disbursement->amount,2)}}</td>
+                                    <td scope="col">{{$disbursement->reference}}</td>
+                                    <td scope="col">{{$disbursement->remarks}}</td>
+                                    <td scope="col" style='min-width:100px'>
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href='delete-disbursement/{{$disbursement->id}}' onclick="return confirm('Are you sure you want to delete this Disbursement?')" >Delete</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>

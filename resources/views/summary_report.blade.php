@@ -70,6 +70,7 @@
                             <option></option>
                             <option value='1' {{ ($type == '1' ? "selected":"") }} >Payment Report</option>
                             <option value='2' {{ ($type == '2' ? "selected":"") }}>CA Receipt History</option>
+                            <option value='3' {{ ($type == '3' ? "selected":"") }}>Disbursement History</option>
                         </select>
                     </div>
                 </div>
@@ -112,6 +113,61 @@
                                         </td>
                                         <td style='min-width:100px' >
                                             {{$ca_receipt->type}}
+                                        </td>
+                                        <td scope="col">
+                                        ₱ {{number_format($ca_receipt->amount,2)}}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @elseif($type == 3)
+        <a href='{{ url('/disbursement-report?date_from='.$date_from.'&date_to='.$date_to) }}' target='_' style='margin:5px;' class="btn btn-info"><i ></i>PRINT</a>
+        <div class="row">
+                <div class="col">
+                    <div class="card shadow">
+                        <div class="table-responsive">
+                            <table  id='example' class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" style='width:100px'>Payee</th>
+                                        <th scope="col">Check Date</th>
+                                        <th scope="col">Particulars</th>
+                                        <th scope="col">CV Number</th>
+                                        <th scope="col">RPLF Number</th>
+                                        <th scope="col">Check Number</th>
+                                        <th scope="col">Reference</th>
+                                        <th scope="col">Amunt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($ca_receipts as $ca_receipt)
+                                    <tr>
+                                        <td style='min-width:100px' >
+                                            <span title='{{$ca_receipt->payee}}'>{{str_limit($ca_receipt->payee, 25)}}</span>
+                                        </td>
+                                        <td style='min-width:100px' >
+                                            {{date('M. d, Y', strtotime($ca_receipt->check_date))}}
+                                           
+                                        </td>
+                                        <td style='min-width:100px' >
+                                            {{$ca_receipt->particulars}}
+                                        </td>
+                                        <td style='min-width:100px' >
+                                            {{$ca_receipt->cv_number}}
+                                        </td>
+                                        <td style='min-width:100px' >
+                                            {{$ca_receipt->rplf_number}}
+                                        </td>
+                                        <td style='min-width:100px' >
+                                            {{$ca_receipt->check_number}}
+                                        </td>
+                                        <td style='min-width:100px' >
+                                            {{$ca_receipt->reference}}
                                         </td>
                                         <td scope="col">
                                         ₱ {{number_format($ca_receipt->amount,2)}}

@@ -131,16 +131,19 @@
                                     <td>{{date('M. Y',strtotime($soa->date_due))}}
                                     </td>
                                     @if($key == 0)
-                                    <td>
-                                        {{number_format($soa->previos_bill,2)}}
+                                    @php
+                                        $ending_principal = $soa->previos_bill;
+                                        $ending_interest = $soa->previos_interest;
+                                        $ending_total = $soa->previos_bill+$soa->previos_interest
+                                    @endphp
+                                     <td>
+                                        {{number_format($ending_principal,2)}}
                                     </td>
-                                    
-                                    
                                     <td>
-                                        {{number_format($soa->previos_interest,2)}}
+                                        {{number_format($ending_interest,2)}}
                                     </td>
                                     <td>
-                                        {{number_format($soa->previos_bill+$soa->previos_interest,2)}}
+                                        {{number_format($ending_total,2)}}
                                     </td>
                                     @else
                                     <td>
@@ -162,7 +165,7 @@
                                     </td>
                                     <td>
                                         @php
-                                        $rate_interest = $soa->previos_bill-$data[$key]['payment'];
+                                        $rate_interest = $ending_principal-$data[$key]['payment'];
                                         if($rate_interest <= 0)
                                         {
                                             $interest_rate = 0;

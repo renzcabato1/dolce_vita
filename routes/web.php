@@ -41,6 +41,7 @@ Route::get('/summary-report','PaymentController@summary_report');
 Route::get('/obr-report','PaymentController@obr_report');
 Route::get('/obr-report-pdf','PaymentController@obr_report_pdf');
 Route::get('/payment-report','PaymentController@payment_report_pdf');
+Route::get('/disbursement-report','PaymentController@disbursement_report');
 Route::get('/payment','PaymentController@payment_show');
 Route::get('/get-client-infor','PaymentController@client_view_infor');
 Route::get('/delete-payment/{payment_id}','PaymentController@delete_payment');
