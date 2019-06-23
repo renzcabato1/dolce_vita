@@ -185,7 +185,7 @@
                                     </td>
                                     <td>
                                         @php
-                                        $principal = $ending_principal + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
+                                        $principal = $ending_principal  - $soa->discount - $data[$key]['payment'];
                                         $ending_principal = $principal;
                                         @endphp
                                         {{number_format($principal,2)}}
