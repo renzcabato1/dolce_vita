@@ -69,7 +69,7 @@
                         <select class="form-control" name='check_type' required>
                             <option></option>
                             <option value='AUB CA 101-01-000245-7' {{ ($type == 'AUB CA 101-01-000245-7' ? "selected":"") }} >AUB CA 101-01-000245-7</option>
-                            <option value='AUB CA 101-01-000294-2' {{ ($type == 'AUB CA 101-01-000294-2' ? "selected":"") }} >AUB CA 101-01-000294-2</option>
+                            <option value='AUB CA 101-01-000352-6' {{ ($type == 'AUB CA 101-01-000352-6' ? "selected":"") }} >AUB CA 101-01-000352-6</option>
                             
                         </select>
                     </div>

@@ -40,7 +40,7 @@
                                     <select class="form-control" name='check_type' required>
                                         <option></option>
                                         <option value='AUB CA 101-01-000245-7' >AUB CA 101-01-000245-7</option>
-                                        <option value='AUB CA 101-01-000294-2'>AUB CA 101-01-000294-2</option>
+                                        <option value='AUB CA 101-01-000352-6'>AUB CA 101-01-000352-6</option>
 
                                     </select>
                                 </div>
