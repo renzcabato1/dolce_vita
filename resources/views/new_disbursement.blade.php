@@ -34,7 +34,18 @@
                                     <input class="form-control" value='' name='payee'  required >  
                                 </div>
                             </div>
-                            <div class='col-md-6'>
+                            <div class='col-md-3'>
+                                <div class="form-group">
+                                    <label>Account Number:</label>
+                                    <select class="form-control" name='check_type' required>
+                                        <option></option>
+                                        <option value='AUB CA 101-01-000245-7' >AUB CA 101-01-000245-7</option>
+                                        <option value='AUB CA 101-01-000294-2'>AUB CA 101-01-000294-2</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class='col-md-3'>
                                 <div class="form-group">
                                     <label>Check Date:</label>
                                     <input class="form-control" type="date" id='check_date' tabindex="4"  name='check_date'   required>

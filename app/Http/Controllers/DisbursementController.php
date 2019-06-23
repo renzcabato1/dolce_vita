@@ -34,6 +34,7 @@ class DisbursementController extends Controller
         $data->amount = $request->amount;
         $data->reference = $request->reference;
         $data->remarks = $request->remarks;
+        $data->check_type = $request->check_type;
         $data->save();
         $request->session()->flash('status','Successfully Added Disbursement');
         return back();
@@ -44,5 +45,18 @@ class DisbursementController extends Controller
         $data->delete();
         $request->session()->flash('status','Successfully Deleted');
         return back();
+    }
+    public function disbursement_a(Request $request)
+    {
+        $date_from = $request->date_from;
+        $date_to = $request->date_to;
+        $type = $request->check_type;
+        $results = Disbursement::whereBetween('check_date',[$date_from, $date_to])->where('check_type','=',$type)->orderBy('check_date','asc')->get();
+        return view('disbursement_a',array(
+            'date_from' => $date_from,
+            'date_to' => $date_to,
+            'type' => $type,  
+            'ca_receipts' => $results,         
+        ));
     }
 }

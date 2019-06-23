@@ -668,5 +668,20 @@ class PaymentController extends Controller
         $request->session()->flash('status',' Successfully Deleted!');
         return back();
     }
+    public function disbursement_report_a_b(Request $request)
+    {
+        $date_from = $request->date_from;
+        $date_to = $request->date_to;
+        $check_type = $request->check_type;
+        $results = Disbursement::whereBetween('check_date',[$date_from, $date_to])->where('check_type','=',$check_type)->orderBy('check_date','asc')->get(); 
+        $pdf = PDF::loadView('disbursement_report_a_b_pdf',array(
+            'date_from' => $date_from,
+            'date_to' => $date_to,
+            'results' => $results,
+            'check_type' => $check_type,
+        ));
+        return $pdf->stream('disbursement_report_a_pdf.pdf');
+        
+    }
 }
     

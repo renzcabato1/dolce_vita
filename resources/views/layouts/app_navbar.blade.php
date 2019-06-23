@@ -201,6 +201,11 @@
               <i class="ni ni-money-coins text-infor"></i>Disbursement
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/disbursement-report-a') }}" onclick='show()'>
+              <i class="ni ni-money-coins text-infor"></i>Disbursement Report
+            </a>
+          </li>
           
         </ul>
         <!-- Divider -->

@@ -69,6 +69,7 @@
                         <table  id="example"   class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
+                                    <th scope="col" >Bank Account</th>
                                     <th scope="col" >Payee</th>
                                     <th scope="col">Check Date</th>
                                     <th scope="col">Particulars</th>
@@ -84,6 +85,7 @@
                             <tbody>
                                 @foreach($disbursements as $disbursement)
                                 <tr>
+                                    <td scope="col" >{{$disbursement->check_type}}</td>
                                     <td scope="col" >{{$disbursement->payee}}</td>
                                     <td scope="col">{{date('M. d, Y',strtotime($disbursement->check_date))}}</td>
                                     <td scope="col">{{$disbursement->particulars}}</td>
