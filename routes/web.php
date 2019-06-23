@@ -52,4 +52,5 @@ Route::post('add-disbursement','DisbursementController@new_disbursement');
 Route::get('/delete-disbursement/{id}','DisbursementController@delete_disbursement');
 Route::get('/disbursement-report-a','DisbursementController@disbursement_a');
 Route::get('/disbursement-report-a-b','PaymentController@disbursement_report_a_b');
+Route::post('save_edit_disbursement/{id}','DisbursementController@save_edit_disbursement');
 });

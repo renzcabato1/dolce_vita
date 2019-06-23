@@ -102,8 +102,11 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                 <a class="dropdown-item" href='delete-disbursement/{{$disbursement->id}}' onclick="return confirm('Are you sure you want to delete this Disbursement?')" >Delete</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#edit_disbursement{{$disbursement->id}}" data-toggle="edit"  href="#">Edit</a>
+                                               
                                             </div>
                                         </div>
+                                        @include('edit_disbursement')
                                     </td>
                                 </tr>
                                 @endforeach

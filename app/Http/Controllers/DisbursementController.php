@@ -59,4 +59,23 @@ class DisbursementController extends Controller
             'ca_receipts' => $results,         
         ));
     }
+    public function save_edit_disbursement(Request $request,$id)
+    {
+       
+        $data = Disbursement::findOrfail($id);
+        $data->payee = $request->payee;
+        $data->check_date = $request->check_date;
+        $data->particulars = $request->particulars;
+        $data->cv_number = $request->cv_number;
+        $data->rplf_number = $request->rplf_number;
+        $data->check_number = $request->check_number;
+        $data->amount = $request->amount;
+        $data->reference = $request->reference;
+        $data->remarks = $request->remarks;
+        $data->check_type = $request->check_type;
+        $data->save();
+        $request->session()->flash('status','Successfully Added Disbursement');
+        return back();
+
+    }
 }
