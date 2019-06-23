@@ -188,7 +188,7 @@
                                         $principal = $ending_principal + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
                                         $ending_principal = $principal;
                                         @endphp
-                                        {{number_format($principal,2)}}
+                                        {{number_format($ending_principal,2)}}
                                     </td>
                                     <td>
                                         @php
@@ -197,7 +197,7 @@
                                         $ending_interest =  $total_interest;
                                         $ending_total = $total_ending_balance ;
                                         @endphp
-                                        {{number_format($total_interest,2)}}
+                                        {{number_format($ending_interest,2)}}
                                     </td>
                                     <td>
                                         {{number_format($total_ending_balance,2)}}
