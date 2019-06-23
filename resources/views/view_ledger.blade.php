@@ -165,7 +165,7 @@
                                     </td>
                                     <td>
                                         @php
-                                        $rate_interest = $ending_principal+(7*$cl->area)-$data[$key]['payment'];
+                                        $rate_interest = $ending_principal-$data[$key]['payment'];
                                         if($rate_interest <= 0)
                                         {
                                             $interest_rate = 0;
@@ -185,7 +185,7 @@
                                     </td>
                                     <td>
                                         @php
-                                        $principal = $ending_principal  - $soa->discount - $data[$key]['payment'];
+                                        $principal = $ending_principal + (7*$cl->area) - $soa->discount - $data[$key]['payment'];
                                         $ending_principal = $principal;
                                         @endphp
                                         {{number_format($principal,2)}}
