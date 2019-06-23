@@ -165,7 +165,7 @@
                                     </td>
                                     <td>
                                         @php
-                                        $rate_interest = $ending_principal-$data[$key]['payment'];
+                                        $rate_interest = $ending_principal+(7*$cl->area)-$data[$key]['payment'];
                                         if($rate_interest <= 0)
                                         {
                                             $interest_rate = 0;
