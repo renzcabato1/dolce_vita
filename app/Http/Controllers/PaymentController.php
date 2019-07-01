@@ -557,8 +557,7 @@ class PaymentController extends Controller
     $non_resident_count = Client::where('status','non-resident')->count();
     $unknown = Client::where('status','!=','non-resident')->where('status','!=','resident')->count();
     
-    foreach($soa_payments as $soa_payment)
-    {
+    foreach($soa_payments as $soa_payment){
         $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
         if($soa_old == null)
         {
@@ -574,8 +573,25 @@ class PaymentController extends Controller
             }
             else
             {
-                $payments[] = $payment->amount;
+                $payment = Payment::where('soa_number',$soa_old->id)->get();
+                if(!$payment->isEmpty())
+                {
+                    $last_payment = 0;
+                    foreach($payment as $pay)
+                    {
+                        $last_payment = $last_payment + $pay->amount;
+                        
+                    }
+                    $payments[] = $last_payment;
+                    
+                }
+                else
+                {
+                    $payments[] = 0;
+                }
+                
             }
+            
         }
     }
     $pdf = PDF::loadView('obr_report_pdf_all',array(
