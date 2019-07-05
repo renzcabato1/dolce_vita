@@ -33,6 +33,7 @@ Route::get('/car-pdf/{id}','CareceiptController@car_pdf');
 Route::post('/edit-car/{id}','CareceiptController@save_edit_car');
 Route::get('/soa','PaymentController@soa');
 Route::get('/print-soa-pdf','PaymentController@print_all_soa');
+Route::get('/ledger-report','LedgerController@ledger_print');
 Route::post('/generate-soa','PaymentController@generate_soa');
 Route::post('/edit-soa/{id}','PaymentController@save_edit_soa');
 Route::post('/add-payment/{id}','PaymentController@add_payment');

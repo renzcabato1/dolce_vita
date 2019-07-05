@@ -549,7 +549,8 @@ class PaymentController extends Controller
     $date_uses = Soapayment::groupBy('date_soa')->orderBy('date_soa','desc')->get(['date_soa']);
     $soa_payments = Soapayment::where('date_soa',$date_select)
     ->leftJoin('clients','soapayments.client_id','=','clients.id')
-    ->select('soapayments.*','clients.name as client_name','clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
+    ->select('soapayments.*','clients.name as client_name'
+    ,'clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
     ->orderBy('client_lot_number')
     ->get();
     $payments = [];
@@ -633,7 +634,6 @@ class PaymentController extends Controller
             'results' => $results,
         ));
         return $pdf->stream('disbursement_report_pdf.pdf');
-        
     }
     public function payment_show()
     {   

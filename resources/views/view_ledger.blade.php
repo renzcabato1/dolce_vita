@@ -72,7 +72,6 @@
                         </select>
                     </div>
                 </div>
-                
                 <div class="col-md-1">
                     <div class="form-group">
                         <br>
@@ -91,7 +90,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" colspan='12' style='width:100px'>
-                                        Name : {{$cl->name}}<br>
+                                        Name : {{$cl->name}}  <a href='{{ url('/ledger-report?name='.$client_id) }}' target='_' style='margin:5px;' class="btn btn-info"><i ></i>PRINT</a><br>
                                         Area : {{$cl->area}}<br>
                                         Cost : 7<br>
                                         Hoa ID : {{$cl->hoa_id}}<br>
