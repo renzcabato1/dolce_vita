@@ -135,7 +135,7 @@ class PaymentController extends Controller
             }
             // $principal = $total_overdue_charges - $soa_payment->previos_interest +$soa_payment->discount + $last_payment;
             // $interest = $total_overdue_charges - $principal - $soa_payment->adjustment + $latest_interest;
-            $sub_total = $total_overdue_charges + $latest_interest + $soa_payment->adjustment ;
+            $sub_total = $total_overdue_charges + $latest_interest - $soa_payment->adjustment ;
             $total_amout_due = $sub_total + $total_current_charges;
             $obr = $obr + $total_amout_due;
             $soa_summary = $total_amout_due - $payment_a;
