@@ -103,9 +103,14 @@
                                         $soa_number = 'SOA-'.date('Y-m',(strtotime($soa_payment->date_soa))).'-'.$soa_payment->billing_number;
                                     }
                                     $last_payment = $payments[$key];
+                                    if($soa_payment->previos_interest <= 0)
+            {
+                $previous_interest = 0;
+            }
+            else
+            {$previous_interest = $soa_payment->previos_interest;}
                                     $total_current_charges = ($soa_payment->special_assessment+$soa_payment->others+($soa_payment->rate * $soa_payment->lot_size));
-                
-                                    $total_overdue_charges = $soa_payment->previos_bill+$soa_payment->previos_interest-$soa_payment->discount-$last_payment;
+                                    $total_overdue_charges = $soa_payment->previos_bill+$previous_interest-$soa_payment->discount-$last_payment;
                                     if(($soa_payment->previos_bill - $last_payment) <= 0)
                                     {
                                         $latest_interest = 0;
