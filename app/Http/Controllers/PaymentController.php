@@ -119,27 +119,23 @@ class PaymentController extends Controller
                     {
                         $last_payment = 0;
                     }
-                    
                 }
                 
             }
             
             $total_current_charges = ($soa_payment->special_assessment+$soa_payment->others+($soa_payment->rate * $soa_payment->lot_size));
-            
             $total_overdue_charges = $soa_payment->previos_bill+$soa_payment->previos_interest-$soa_payment->discount-$last_payment;
-            
-            
             if(($soa_payment->previos_bill - $last_payment) <= 0)
             {
                 $latest_interest = 0;
             }
             else
             {
-                $latest_interest = $soa_payment->previos_bill*.02;
+                $latest_interest = ($soa_payment->previos_bill - $last_payment)*.02;
             }
             // $principal = $total_overdue_charges - $soa_payment->previos_interest +$soa_payment->discount + $last_payment;
             // $interest = $total_overdue_charges - $principal - $soa_payment->adjustment + $latest_interest;
-            $sub_total = $total_overdue_charges + $latest_interest - $soa_payment->adjustment;
+            $sub_total = $total_overdue_charges + $latest_interest ;
             $total_amout_due = $sub_total + $total_current_charges;
             $obr = $obr + $total_amout_due;
             $soa_summary = $total_amout_due - $payment_a;
