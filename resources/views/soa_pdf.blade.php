@@ -191,15 +191,6 @@
         </tr>
     </table>
     <br>
-     @if($soa_payment->previos_interest <= 0)
-                    @php
-                        $previous_interest = 0;
-                    @endphp    
-                @else
-                    @php
-                        $previous_interest = $soa_payment->previos_interest;
-                    @endphp   
-                @endif
     <table width="100%" cellspacing="0"  style='font-size:16px' frame="box">
         <tr>
             <td valign="top" colspan='3'  >
@@ -237,9 +228,7 @@
                 :
             </td>
             <td valign="top"  width='23%' style='text-align:right;padding-right:50px;'>
-               
-               
-                {{number_format(($previous_interest),2)}}
+                {{number_format(($soa_payment->previos_interest),2)}}
             </td>
             <td valign="top"  width='20%' >
                 <span style="padding-left: 10px;">Special Assessment</span>
@@ -295,7 +284,7 @@
             </td>
             <td valign="top" width='23%' style='text-align:right;padding-right:50px;'>
                 @php
-                $total_overdue_charges = $soa_payment->previos_bill+$previous_interest-$soa_payment->discount-$last_payment;
+                $total_overdue_charges = $soa_payment->previos_bill+$soa_payment->previos_interest-$soa_payment->discount-$last_payment;
                 if(($soa_payment->previos_bill - $last_payment) <= 0)
                 {
                     $latest_interest = 0;
