@@ -20,7 +20,7 @@ class LedgerController extends Controller
         if($request)
         {
         $client = Client::findOrfail($client_id);
-        $soapayment = Soapayment::where('client_id',$client_id)->orderBy('id','asc')->get();
+        $soapayment = Soapayment::with('payment_info')->where('client_id',$client_id)->orderBy('id','asc')->get();
             foreach($soapayment as $soa)
             {
                 $payment = Payment::where('soa_number',$soa->id)->sum('amount');
@@ -49,7 +49,7 @@ class LedgerController extends Controller
         if($request)
         {
         $client = Client::findOrfail($client_id);
-        $soapayment = Soapayment::where('client_id',$client_id)->orderBy('id','asc')->get();
+        $soapayment = Soapayment::with('payment_info')->where('client_id',$client_id)->orderBy('id','asc')->get();
             foreach($soapayment as $soa)
             {
                 $payment = Payment::where('soa_number',$soa->id)->sum('amount');
@@ -66,7 +66,7 @@ class LedgerController extends Controller
             'client_id' => $client_id,
             'soapayment' => $soapayment,
             'data' => $data,
-            ))->setOrientation('landscape');
+            ))->setOrientation('landscape')->setPaper('legal');
         
             return $pdf->stream('ledger_print.pdf');
     }

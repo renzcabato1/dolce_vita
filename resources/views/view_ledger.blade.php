@@ -89,7 +89,7 @@
                         <table class="table align-items-center table-flush" border='1'>
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col" colspan='12' style='width:100px'>
+                                    <th scope="col" colspan='15' style='width:100px'>
                                         Name : {{$cl->name}}  <a href='{{ url('/ledger-report?name='.$client_id) }}' target='_' style='margin:5px;' class="btn btn-info"><i ></i>PRINT</a><br>
                                         Area : {{$cl->area}}<br>
                                         Cost : 7<br>
@@ -102,8 +102,9 @@
                                     <th scope="col" rowspan='2' style='width:100px'>Applicable Month</th>
                                     <th scope="col" colspan='3'>Beginning Balance</th>
                                     <th scope="col" rowspan='2'>Monthly Dues</th>
-                                    <th scope="col" rowspan='2'>Payment</th>
                                     <th scope="col" rowspan='2'>Montly Interest</th>
+                                    <th scope="col" colspan='3'>OR NUMBER - PAYMENT</th>
+                                    <th scope="col" rowspan='2'>Payment</th>
                                     <th scope="col" rowspan = 2>Principal Adjustment</th>
                                     <th scope="col" rowspan = 2>Interest Adjustment:</th>
                                     <th scope="col" colspan='3'>Ending Balance</th>
@@ -113,6 +114,9 @@
                                     <th scope="col">Principal</th>
                                     <th scope="col">Interest</th>
                                     <th scope="col">Total</th>
+                                    <th scope="col">OR Number</th>
+                                    <th scope="col">Payment</th>
+                                    <th scope="col">Date Paid</th>
                                     <th scope="col">Principal</th>
                                     <th scope="col">Interest</th>
                                     <th scope="col">Total</th>
@@ -127,6 +131,7 @@
                                 @endphp
                                 @foreach($soapayment as $key => $soa)
                                 <tr>
+                                    {{-- {{$soa->payment_info}} --}}
                                     <td>{{date('M. Y',strtotime($soa->date_due))}}
                                     </td>
                                     @if($key == 0)
@@ -160,9 +165,6 @@
                                         {{number_format(7*$cl->area,2)}}
                                     </td>
                                     <td>
-                                        {{number_format(($data[$key]['payment']),2)}}
-                                    </td>
-                                    <td>
                                         @php
                                         $rate_interest = $ending_principal;
                                         if($rate_interest <= 0)
@@ -176,6 +178,26 @@
                                         @endphp
                                         {{number_format($interest_rate,2)}}
                                     </td>
+                                    <td>
+                                        @foreach($soa->payment_info as $paid)
+                                            {{$paid->or_number}}<br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach($soa->payment_info as $paid)
+                                            {{number_format($paid->amount,2)}}<br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach($soa->payment_info as $paid)
+                                            {{date('F d, Y',strtotime($paid->date_paid))}}<br>
+                                        @endforeach
+                                    </td>
+
+                                    <td>
+                                        {{number_format(($data[$key]['payment']),2)}}
+                                    </td>
+                                 
                                     <td>
                                         {{number_format($soa->discount,2)}}
                                     </td>

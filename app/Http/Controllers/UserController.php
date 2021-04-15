@@ -51,6 +51,7 @@ class UserController extends Controller
             $advance_payor_data=array();
             $un_paid_data=array();
             $live_payor_data=array();
+            $payments = 0;
             foreach($soa_payments as $key => $soa_payment)
             {
                 

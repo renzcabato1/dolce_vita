@@ -53,7 +53,7 @@
     <table border='1' width='100%' style='text-align:left' >
            
             <tr>
-                <th scope="col" colspan='12' >
+                <th scope="col" colspan='15' >
                     Name : {{$cl->name}} <br>
                     Area : {{$cl->area}}<br>
                     Cost : 7<br>
@@ -67,10 +67,14 @@
                 <th scope="col" rowspan='2'>Applicable Month</th>
                 <th scope="col" colspan='3'>Beginning Balance</th>
                 <th scope="col" rowspan='2'>Monthly Dues</th>
-                <th scope="col" rowspan='2'>Payment</th>
+                
                 <th scope="col" rowspan='2'>Montly Interest</th>
+                <th scope="col" colspan='3'>OR NUMBER - PAYMENT</th>
+                
+                <th scope="col" rowspan='2'>Payment</th>
                 <th scope="col" rowspan = 2>Principal Adjustment</th>
                 <th scope="col" rowspan = 2>Interest Adjustment:</th>
+                
                 <th scope="col" colspan='3'>Ending Balance</th>
                 
             </tr>
@@ -78,6 +82,10 @@
                 <th scope="col">Principal</th>
                 <th scope="col">Interest</th>
                 <th scope="col">Total</th>
+                
+                <th scope="col">OR Number</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Date Paid</th>
                 <th scope="col">Principal</th>
                 <th scope="col">Interest</th>
                 <th scope="col">Total</th>
@@ -125,9 +133,6 @@
                     {{number_format(7*$cl->area,2)}}
                 </td>
                 <td style='text-align:right;'>
-                    {{number_format(($data[$key]['payment']),2)}}
-                </td>
-                <td style='text-align:right;'>
                     @php
                     $rate_interest = $ending_principal;
                     if($rate_interest <= 0)
@@ -141,6 +146,25 @@
                     @endphp
                     {{number_format($interest_rate,2)}}
                 </td >
+                <td>
+                    @foreach($soa->payment_info as $paid)
+                        {{$paid->or_number}}<br>
+                    @endforeach
+                </td>
+                <td>
+                    @foreach($soa->payment_info as $paid)
+                        {{number_format($paid->amount,2)}}<br>
+                    @endforeach
+                </td>
+                <td>
+                    @foreach($soa->payment_info as $paid)
+                        {{date('F d, Y',strtotime($paid->date_paid))}}<br>
+                    @endforeach
+                </td>
+                <td style='text-align:right;'>
+                    {{number_format(($data[$key]['payment']),2)}}
+                </td>
+               
                 <td style='text-align:right;'>
                     {{number_format($soa->discount,2)}}
                 </td>
