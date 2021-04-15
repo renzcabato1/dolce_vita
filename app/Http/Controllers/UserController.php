@@ -40,6 +40,7 @@ class UserController extends Controller
             $live_payor = 0;
             $un_paid = 0;
             $advance_payor = 0;
+            $payment_a = 0;
             
             $date_today = date('Y-m-d');
             $clients_count = Client::count();
