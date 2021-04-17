@@ -206,6 +206,12 @@
               <i class="ni ni-money-coins text-infor"></i>Disbursement Report
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/download') }}" onclick='show()'>
+              <i class="ni ni-cloud-download-95 text-infor"></i>Download Backup
+
+            </a>
+          </li>
           
         </ul>
         <!-- Divider -->

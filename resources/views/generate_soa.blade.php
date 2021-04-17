@@ -19,8 +19,8 @@
                         {{ csrf_field() }}
                         <div class='col-md-12'>
                             <div class="form-group">
-                                <label>Date:</label>
-                            <input class="form-control" pattern="[A-Za-z ,.]+" type="month" min='{{$soa_last_month}}' name='month_of_soa'  placeholder=''  required>
+                                <label>Previous Generated : {{$name_of_month}} </label>
+                            <input class="form-control" pattern="[A-Za-z ,.]+" type="month" min='{{$soa_last_month}}' value="{{$soa_last_month}}" name='month_of_soa'  placeholder=''  required>
                             </div>
                         </div>
                     </div>

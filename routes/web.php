@@ -55,4 +55,6 @@ Route::get('/disbursement-report-a','DisbursementController@disbursement_a');
 Route::get('/disbursement-report-a-b','PaymentController@disbursement_report_a_b');
 Route::post('save_edit_disbursement/{id}','DisbursementController@save_edit_disbursement');
 Route::get('renz','PaymentController@renz');
+Route::get('backupDatabase','PaymentController@backpdatabase');
+Route::get('download','PaymentController@download');
 });

@@ -146,7 +146,7 @@ class PaymentController extends Controller
         }
         //  return ($soa_payments);
         $soa_last_month = Soapayment::orderBy('id','desc')->first();
-        $name_of_month =  date(('F'),strtotime($soa_last_month->date_soa));
+        $name_of_month =  date(('F Y'),strtotime($soa_last_month->date_soa));
         return view('soa',array (
             'soa_payments' => $soa_payments,                
             'name_of_month' => $name_of_month,    
@@ -542,65 +542,65 @@ class PaymentController extends Controller
     }
     public function obr_report_pdf(Request $request)
     {
-    $date_select = $request->date_select;
-    $date_uses = Soapayment::groupBy('date_soa')->orderBy('date_soa','desc')->get(['date_soa']);
-    $soa_payments = Soapayment::where('date_soa',$date_select)
-    ->leftJoin('clients','soapayments.client_id','=','clients.id')
-    ->select('soapayments.*','clients.name as client_name'
-    ,'clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
-    ->orderBy('client_lot_number')
-    ->get();
-    $payments = [];
-    $resident_count = Client::where('status','resident')->count();
-    $non_resident_count = Client::where('status','non-resident')->count();
-    $unknown = Client::where('status','!=','non-resident')->where('status','!=','resident')->count();
-    
-    foreach($soa_payments as $soa_payment){
-        $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
-        if($soa_old == null)
-        {
-            $payments[] = 0;
-        }
-        else
-        {
-            $payment = Payment::where('soa_number',$soa_old->id)->first();
-            if($payment == null)
+        $date_select = $request->date_select;
+        $date_uses = Soapayment::groupBy('date_soa')->orderBy('date_soa','desc')->get(['date_soa']);
+        $soa_payments = Soapayment::where('date_soa',$date_select)
+        ->leftJoin('clients','soapayments.client_id','=','clients.id')
+        ->select('soapayments.*','clients.name as client_name'
+        ,'clients.lot_number as client_lot_number','clients.hoa_id as client_hoa_id','clients.address as client_address','clients.status as client_status')
+        ->orderBy('client_lot_number')
+        ->get();
+        $payments = [];
+        $resident_count = Client::where('status','resident')->count();
+        $non_resident_count = Client::where('status','non-resident')->count();
+        $unknown = Client::where('status','!=','non-resident')->where('status','!=','resident')->count();
+        
+        foreach($soa_payments as $soa_payment){
+            $soa_old = Soapayment::where('done',1)->where('client_id',$soa_payment->client_id)->orderBy('date_soa','desc')->first();
+            if($soa_old == null)
             {
-                
                 $payments[] = 0;
             }
             else
             {
-                $payment = Payment::where('soa_number',$soa_old->id)->get();
-                if(!$payment->isEmpty())
+                $payment = Payment::where('soa_number',$soa_old->id)->first();
+                if($payment == null)
                 {
-                    $last_payment = 0;
-                    foreach($payment as $pay)
-                    {
-                        $last_payment = $last_payment + $pay->amount;
-                        
-                    }
-                    $payments[] = $last_payment;
                     
+                    $payments[] = 0;
                 }
                 else
                 {
-                    $payments[] = 0;
+                    $payment = Payment::where('soa_number',$soa_old->id)->get();
+                    if(!$payment->isEmpty())
+                    {
+                        $last_payment = 0;
+                        foreach($payment as $pay)
+                        {
+                            $last_payment = $last_payment + $pay->amount;
+                            
+                        }
+                        $payments[] = $last_payment;
+                        
+                    }
+                    else
+                    {
+                        $payments[] = 0;
+                    }
+                    
                 }
                 
             }
-            
         }
-    }
-    $pdf = PDF::loadView('obr_report_pdf_all',array(
-    'soa_payments' => $soa_payments,
-    'payments' => $payments,
-    'date_select' => $date_select,
-    'resident_count' => $resident_count,
-    'non_resident_count' => $non_resident_count,
-    'unknown' => $unknown))->setOrientation('landscape');
+        $pdf = PDF::loadView('obr_report_pdf_all',array(
+        'soa_payments' => $soa_payments,
+        'payments' => $payments,
+        'date_select' => $date_select,
+        'resident_count' => $resident_count,
+        'non_resident_count' => $non_resident_count,
+        'unknown' => $unknown))->setOrientation('landscape');
 
-    return $pdf->stream('soa_all_obr.pdf');
+        return $pdf->stream('soa_all_obr.pdf');
     }
     public function payment_report_pdf(Request $request)
     {
@@ -695,6 +695,74 @@ class PaymentController extends Controller
         ));
         return $pdf->stream('disbursement_report_a_pdf.pdf');
         
+    }
+    public function backpdatabase()
+    {
+        //ENTER THE RELEVANT INFO BELOW
+        $mysqlHostName      = env('DB_HOST');
+        $mysqlUserName      = env('DB_USERNAME');
+        $mysqlPassword      = env('DB_PASSWORD');
+        $DbName             = env('DB_DATABASE');
+        $backup_name        = "dolce.sql";
+        $tables             = array("users","careceipts","clients","disbursements","obrs","payments","soapayments"); //here your tables...
+
+        $connect = new \PDO("mysql:host=$mysqlHostName;dbname=$DbName;charset=utf8", "$mysqlUserName", "$mysqlPassword",array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+        $get_all_table_query = "SHOW TABLES";
+        $statement = $connect->prepare($get_all_table_query);
+        $statement->execute();
+        $result = $statement->fetchAll();
+
+
+        $output = '';
+        // dd($tables);
+        foreach($tables as $table)
+        {
+         $show_table_query = "SHOW CREATE TABLE " . $table . "";
+         $statement = $connect->prepare($show_table_query);
+         $statement->execute();
+         $show_table_result = $statement->fetchAll();
+
+         foreach($show_table_result as $show_table_row)
+         {
+          $output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
+         }
+         $select_query = "SELECT * FROM " . $table . "";
+         $statement = $connect->prepare($select_query);
+         $statement->execute();
+         $total_row = $statement->rowCount();
+
+         for($count=0; $count<$total_row; $count++)
+         {
+          $single_result = $statement->fetch(\PDO::FETCH_ASSOC);
+          $table_column_array = array_keys($single_result);
+          $table_value_array = array_values($single_result);
+          $output .= "\nINSERT INTO $table (";
+          $output .= "" . implode(", ", $table_column_array) . ") VALUES (";
+          $output .= "'" . implode("','", $table_value_array) . "');\n";
+         }
+        }
+        $file_name = 'database_backup_on_' . date('y-m-d') . '.sql';
+        $file_handle = fopen($file_name, 'w+');
+        fwrite($file_handle, $output);
+        fclose($file_handle);
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename=' . basename($file_name));
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+           header('Pragma: public');
+           header('Content-Length: ' . filesize($file_name));
+           ob_clean();
+           flush();
+           readfile($file_name);
+           unlink($file_name);
+           return back();
+
+    }
+    public function download ()
+    {
+        return view('download');
     }
 }
     
