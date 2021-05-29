@@ -296,7 +296,7 @@
                 }
                 else
                 {
-                $latest_interest = $soa_payment->previos_bill*.02;
+                    $latest_interest = ($soa_payment->previos_bill - $last_payment)*.02;
                 }
                 @endphp
                 
@@ -377,9 +377,9 @@
         3. For check Payment, please make check payable to: Villaggio di Xavier Dolce Vita HOA, Inc.			<br>			
         4. Check payment shall be crossed "for Payees Account only" , 2nd endorsed checks shall not be honored.	<br>					
         5. You may also deposit payment to <b>Asia United Bank-(Any Branch), Bank Acct No. 101-01-000245-7 Acct Name: Villaggio di Xavier Dolce Vita HOA, Inc.	</b><br>					
-        6. If Payment was made thru bank, indicate your full registered home, HOA ID(found in the billing statement), your Lot # & your contact # at your deposit slip then kindly call us or email to <b>marasiganaadrian168@yahoo.com.</b>	<br>
-        7. For inquiries please contact our village Admin. <b>Mr. Adrian Marasigan at Cp # (0999) 512-6119.</b><br>			
-        8. Payment/s made after <u>{{date('F d, Y',strtotime($soa_payment->date_due))}}</u> will be reflected on the next month billing statement.<br><b>REMINDER: Advance Payment for 1 year will be given 1 (One) month free of Association Dues.<br>	*If there are still un-posted payment comparative with your record, please let us know so that we can make the necessary adjustments.</b>
+        6. If Payment was made thru bank, indicate your full registered home, HOA ID(found in the billing statement), your Lot # & your contact # at your deposit slip then kindly call us or email to <b>VDX.DolceVita.HOAI.2020@gmail.com.</b>	<br>
+        7. For inquiries please contact our village Admin. <b>Ms. Annaliza Medenilla at Cp # (0931) 791-2960.</b><br>			
+        8. Payment/s will be reflected on the next month billing statement.<br><b>REMINDER: Advance Payment for 1 year will be given 1 (One) month free of Association Dues.<br>	*If there are still un-posted payment comparative with your record, please let us know so that we can make the necessary adjustments.</b>
     </p>
     <div class="page-break"></div>
     @endforeach
