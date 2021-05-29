@@ -68,7 +68,7 @@
                         @include('error')
                         <table>
                             <tr>
-                                <form action='print-soa-pdf' method='get' target='_'>
+                                <form action='print-soa-pdf' method='get' target='_blank'>
                                     <td>
                                         <select name='type' class='form-control' style='widht:100px;' required>
                                             <option value='1'>All</option>
