@@ -660,6 +660,7 @@ class PaymentController extends Controller
         'or_number' => 'required|unique:payments,or_number|max:255'
         ]);
         
+        dd($request->all());
         $soa_payment = Soapayment::where('client_id',$request->lot_number)->where('done',0)->first();
         $data = new Payment;
         $data->amount = $request->amount;
