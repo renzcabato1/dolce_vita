@@ -641,7 +641,7 @@ class PaymentController extends Controller
         ->leftJoin('clients','soapayments.client_id','=','clients.id')
         ->select('clients.*','payments.*','clients.id as client_id')
         ->get();
-        $or_numbers = Payment::pluck('or_number')->toArray();
+        $or_numbers = Payment::get();
         $clients = Client::orderBy('name','asc')->get();
         return view('view_payment',array (
             'payments' => $payments, 

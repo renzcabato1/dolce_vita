@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"  style='font-size:12px'>
         <tr >
             <td  align='center' width='100px'> 
                 <img src='{{ asset('navbar/img/brand/blue.png')}}' width='90px' >
@@ -35,7 +35,7 @@
     </table>
     <br>
     
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:16px' >
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:12px' >
         <tr>
             <td valign="top"  width='15%'>
                 Name
@@ -113,7 +113,7 @@
     </table>
     <br>
     
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:16px' >
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style='font-size:12px' >
         <tr>
             <td valign="top"  width='15%'>
                 
@@ -191,7 +191,7 @@
         </tr>
     </table>
     <br>
-    <table width="100%" cellspacing="0"  style='font-size:16px' frame="box">
+    <table width="100%" cellspacing="0"  style='font-size:12px' frame="box">
         <tr>
             <td valign="top" colspan='3'  >
                 <b>Overdues Charges</b>

@@ -120,9 +120,9 @@
                             </div>
                         </div>
                     </div>
-                    @foreach($or_numbers as $or_number)
+                    {{-- @foreach($or_numbers as $or_number)
                     <input type='hidden' name='or_numbers[]' value='{{$or_number}}' id='or_numbers'>
-                    @endforeach
+                    @endforeach --}}
                     <div class='row w-100'>
                         <div class='col-md-6' style=' border-right: 5px solid red;'>
                             <div class="form-group">
@@ -144,7 +144,7 @@
                             <div class="form-group" style='float:right;'>
                                 <br>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" onclick='submit_form()' id='submit' class="btn btn-primary" >Submit</button>
+                                <button type="submit" id='submit' class="btn btn-primary" >Submit</button>
                             </div>
                         </div>
                     </div>
@@ -154,6 +154,7 @@
     </div>
 </div>
 <script type="text/javascript">
+ var or_numbers = {!! json_encode($or_numbers->toArray()) !!};
     function view_obr()
     {
         var lot_number_id = document.getElementById("lot_number").value;
@@ -188,19 +189,16 @@
     
     function submit_form()
     {
-       
-        var or_number_mo = document.getElementsByName('or_numbers[]');
-        for (var i = 0; i <or_number_mo.length; i++) {
-            var or_number_m=or_number_mo[i];
-            if (or_number_m.value == document.getElementById('or_number').value){
-                document.getElementById('or_number_error').innerHTML = "This Or Number already existed!";
-                return false;
-            }
-            else
-            {
-                document.getElementById('or_number_error').innerHTML = "";
-            }
-            }
+        var item = or_numbers.find(item => item.or_number === document.getElementById('or_number').value);
+        console.log(item);
+        if(item != undefined)
+        {
+            document.getElementById('or_number_error').innerHTML = "This Or Number already existed!";
+            return false;
+
+        }
+
+
         if(document.getElementById('lot_number').value.length==0)
         { 
             document.getElementById('lot_number_error').innerHTML = "This Field is Required";

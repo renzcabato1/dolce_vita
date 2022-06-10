@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <div class='row w-100'>
                     <div class='col-10'>
-                        <h1 class="modal-title" id="exampleModalLabel">Advnaced Payor</h1>
+                        <h1 class="modal-title" id="exampleModalLabel">Advanced Payor</h1>
                     </div>
                     <div class='col-2'>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
