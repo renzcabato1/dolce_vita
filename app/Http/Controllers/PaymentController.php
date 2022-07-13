@@ -426,7 +426,6 @@ class PaymentController extends Controller
         $request->validate([
             'or_number' => 'required|unique:payments,or_number|max:255'
             ]);
-            
         $data = new Payment;
         $data->amount = $request->amount;
         $data->or_number = $request->or_number;
