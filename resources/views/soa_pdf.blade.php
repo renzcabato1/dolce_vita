@@ -369,11 +369,11 @@
     <p style='font-size:10px;'><b>Note:</b>	<br>				
         1.Please pay directly to Admin Office during office hours and present this BIlling Statement when paying, pay on or before dute date to avoid any inconvenience.<br>
         2. Please always ask for Official Receipt upon payment.	<br>					
-        3. For check Payment, please make check payable to: Villaggio di Xavier Dolce Vita HOA, Inc.			<br>			
+        3. For check Payment, please make check payable to: Villaggio di Xavier Dolce Vita Homeowners Association, Inc.		<br>	
         4. Check payment shall be crossed "for Payees Account only" , 2nd endorsed checks shall not be honored.	<br>					
-        5. You may also deposit payment to <b>Asia United Bank-(Any Branch), Bank Acct No. 101-01-000245-7 Acct Name: Villaggio di Xavier Dolce Vita HOA, Inc.	</b><br>					
+        5. You may also deposit payment to <b>Asia United Bank-(Any Branch), Bank Acct No. 101-01-000245-7 Acct Name: Villaggio di Xavier Dolce Vita Homeowners Association, Inc.	</b><br>					
         6. If Payment was made thru bank, indicate your full registered home, HOA ID(found in the billing statement), your Lot # & your contact # at your deposit slip then kindly call us or email to <b>VDX.DolceVita.HOAI.2020@gmail.com.</b>	<br>
-        7. For inquiries please contact our village Admin. <b>Ms. Annaliza Medenilla at Cp # (0931) 791-2960.</b><br>			
+        7. For inquiries please contact our village Admin. <b>Contact no. 09294407998</b><br>			
         8. Payment/s will be reflected on the next month billing statement.<br><b>REMINDER: Advance Payment for 1 year will be given 1 (One) month free of Association Dues.<br>	*If there are still un-posted payment comparative with your record, please let us know so that we can make the necessary adjustments.</b>
     </p>
         </body>
