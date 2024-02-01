@@ -598,7 +598,7 @@ class PaymentController extends Controller
         'date_select' => $date_select,
         'resident_count' => $resident_count,
         'non_resident_count' => $non_resident_count,
-        'unknown' => $unknown));
+        'unknown' => $unknown))->setPaper('legal', 'landscape');;
 
         return $pdf->stream('soa_all_obr.pdf');
     }
