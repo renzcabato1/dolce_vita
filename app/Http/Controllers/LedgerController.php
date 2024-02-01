@@ -66,7 +66,7 @@ class LedgerController extends Controller
             'client_id' => $client_id,
             'soapayment' => $soapayment,
             'data' => $data,
-            ))->setOrientation('landscape')->setPaper('legal');
+            ))->setPaper('legal', 'landscape');
         
             return $pdf->stream('ledger_print.pdf');
     }
